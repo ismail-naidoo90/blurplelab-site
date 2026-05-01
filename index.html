@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BlurpleLab — Ideas Built Here</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --blue:          #4F46E5;
+      --purple:        #7C3AED;
+      --blurple:       #6366F1;
+      --blurple-light: #818CF8;
+      --blurple-pale:  #C7D2FE;
+      --gradient:      linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+      --gradient-soft: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%);
+      --ink:           #09090F;
+      --text-mid:      #3D3B56;
+      --text-muted:    #8884A3;
+      --white:         #FFFFFF;
+      --border:        #E8E5F5;
+      --surface:       #FAFAFA;
+      --radius:        18px;
+      --radius-sm:     10px;
+      --font:          'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ─────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(9, 9, 15, 0.82);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 1.15rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: rgba(255,255,255,0.9); }
+
+    .nav-cta {
+      background: var(--gradient) !important;
+      color: #fff !important;
+      padding: 7px 18px;
+      border-radius: 50px;
+      transition: opacity 0.2s, transform 0.2s !important;
+    }
+
+    .nav-cta:hover {
+      opacity: 0.88 !important;
+      transform: translateY(-1px);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: rgba(255,255,255,0.6);
+      border-radius: 2px;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: rgba(9,9,15,0.96);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 8px 0;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      padding: 13px 28px;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .mobile-menu a:hover { color: #fff; }
+
+    /* ── HERO ─────────────────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      background: var(--ink);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 28px 80px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    /* Gradient orbs */
+    .hero-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+
+    .hero-orb-1 {
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(79,70,229,0.35) 0%, transparent 70%);
+      top: -160px;
+      left: -120px;
+    }
+
+    .hero-orb-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(124,58,237,0.28) 0%, transparent 70%);
+      bottom: -120px;
+      right: -80px;
+    }
+
+    .hero-orb-3 {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(129,140,248,0.15) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    /* Grid overlay */
+    .hero-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(99,102,241,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(99,102,241,0.06) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 820px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(99,102,241,0.12);
+      border: 1px solid rgba(99,102,241,0.25);
+      color: var(--blurple-light);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 32px;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      background: var(--blurple-light);
+      border-radius: 50%;
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .hero h1 .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2.2vw, 1.2rem);
+      color: rgba(255,255,255,0.5);
+      max-width: 560px;
+      margin: 0 auto 44px;
+      line-height: 1.75;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gradient);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 0.925rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 28px rgba(99,102,241,0.35);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 36px rgba(99,102,241,0.42);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.65);
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-size: 0.925rem;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.14);
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.3);
+      color: rgba(255,255,255,0.9);
+      transform: translateY(-2px);
+    }
+
+    /* Scroll nudge */
+    .scroll-nudge {
+      position: absolute;
+      bottom: 36px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      z-index: 1;
+    }
+
+    .scroll-nudge span {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, rgba(99,102,241,0.5), transparent);
+      animation: grow 2s ease-in-out infinite;
+    }
+
+    @keyframes grow {
+      0% { transform: scaleY(0); transform-origin: top; opacity: 0; }
+      50% { transform: scaleY(1); opacity: 1; }
+      100% { transform: scaleY(1); opacity: 0; }
+    }
+
+    /* ── FOCUS AREAS ─────────────────────────────────── */
+    #focus {
+      padding: 96px 28px;
+      background: var(--white);
+    }
+
+    .section-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blurple);
+      margin-bottom: 12px;
+    }
+
+    .section-heading {
+      font-size: clamp(1.75rem, 4vw, 2.6rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      line-height: 1.12;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 500px;
+      line-height: 1.75;
+    }
+
+    .section-header {
+      margin-bottom: 56px;
+    }
+
+    .focus-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .focus-item {
+      background: var(--white);
+      padding: 40px 36px;
+      transition: background 0.2s;
+    }
+
+    .focus-item:hover {
+      background: var(--gradient-soft);
+    }
+
+    .focus-number {
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      color: var(--blurple-pale);
+      margin-bottom: 20px;
+    }
+
+    .focus-icon {
+      font-size: 2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .focus-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .focus-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* ── PROJECTS ─────────────────────────────────────── */
+    #projects {
+      padding: 96px 28px;
+      background: var(--surface);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .project-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient);
+      opacity: 0;
+      transition: opacity 0.25s;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 48px rgba(99,102,241,0.12);
+      border-color: rgba(99,102,241,0.22);
+    }
+
+    .card-top-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gradient);
+      border-radius: var(--radius) var(--radius) 0 0;
+      opacity: 0;
+      transition: opacity 0.25s;
+    }
+
+    .project-card:hover .card-top-bar { opacity: 1; }
+
+    .card-content { position: relative; z-index: 1; flex: 1; }
+
+    .card-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-sm);
+      background: var(--gradient-soft);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+    }
+
+    .card-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--blurple);
+      background: rgba(99,102,241,0.08);
+      border: 1px solid rgba(99,102,241,0.15);
+      padding: 4px 10px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-desc {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.72;
+      margin-bottom: 24px;
+    }
+
+    .card-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+
+    .chip {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      background: var(--gradient-soft);
+      border: 1px solid var(--border);
+      padding: 4px 11px;
+      border-radius: 50px;
+    }
+
+    .card-footer {
+      position: relative;
+      z-index: 1;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #A78BFA;
+    }
+
+    .status-dot.active {
+      background: #34D399;
+      box-shadow: 0 0 0 2px rgba(52,211,153,0.2);
+    }
+
+    .card-link {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--blurple);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s;
+    }
+
+    .card-link:hover { gap: 9px; }
+
+    /* ── CONTACT ──────────────────────────────────────── */
+    #contact {
+      padding: 96px 28px;
+      background: var(--ink);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-orb-1 {
+      position: absolute;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(79,70,229,0.22) 0%, transparent 70%);
+      top: -160px; right: -100px;
+      pointer-events: none;
+    }
+
+    .contact-orb-2 {
+      position: absolute;
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(124,58,237,0.18) 0%, transparent 70%);
+      bottom: -80px; left: -60px;
+      pointer-events: none;
+    }
+
+    .contact-inner {
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-inner .section-label {
+      color: rgba(99,102,241,0.8);
+    }
+
+    .contact-inner h2 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      line-height: 1.08;
+      margin-bottom: 20px;
+    }
+
+    .contact-inner h2 .gradient-text {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .contact-inner p {
+      color: rgba(255,255,255,0.45);
+      font-size: 1rem;
+      line-height: 1.75;
+      margin-bottom: 44px;
+      max-width: 440px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-email-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--white);
+      color: var(--blurple);
+      padding: 16px 34px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    }
+
+    .contact-email-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 44px rgba(0,0,0,0.38);
+    }
+
+    .contact-divider {
+      margin: 48px auto 0;
+      max-width: 240px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    }
+
+    .contact-location {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.22);
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+    }
+
+    .location-dot {
+      width: 5px;
+      height: 5px;
+      background: rgba(99,102,241,0.5);
+      border-radius: 50%;
+    }
+
+    /* ── FOOTER ───────────────────────────────────────── */
+    footer {
+      background: #06060C;
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding: 28px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-size: 0.95rem;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-decoration: none;
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.2);
+    }
+
+    /* ── RESPONSIVE ───────────────────────────────────── */
+    @media (max-width: 960px) {
+      .focus-grid {
+        grid-template-columns: 1fr;
+        background: none;
+        gap: 2px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      footer {
+        justify-content: center;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .focus-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #focus, #projects, #contact { padding: 72px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="logo">BlurpleLab</a>
+      <ul class="nav-links">
+        <li><a href="#focus">Focus</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact" class="nav-cta">Work with us</a></li>
+      </ul>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+    <div class="mobile-menu" id="mobileMenu">
+      <a href="#focus"    onclick="toggleMenu()">Focus</a>
+      <a href="#projects" onclick="toggleMenu()">Projects</a>
+      <a href="#contact"  onclick="toggleMenu()">Work with us</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <div class="hero-grid"></div>
+
+    <div class="hero-inner">
+      <div class="hero-badge">
+        <span class="hero-badge-dot"></span>
+        Cape Town &middot; Ideas in production
+      </div>
+
+      <h1>
+        We build what<br />
+        <span class="gradient-text">doesn't exist yet.</span>
+      </h1>
+
+      <p class="hero-sub">
+        BlurpleLab is an innovation lab at the intersection of AI, property tech, and product thinking. We run experiments until something works — then we ship it.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn-primary">
+          See our work
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#contact" class="btn-ghost">Work with us</a>
+      </div>
+    </div>
+
+    <div class="scroll-nudge">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- FOCUS AREAS -->
+  <section id="focus">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-label">What we do</p>
+        <h2 class="section-heading">Three obsessions,<br />one lab.</h2>
+        <p class="section-sub">We go deep in a narrow set of problem spaces — because breadth is the enemy of breakthrough.</p>
+      </div>
+
+      <div class="focus-grid">
+        <div class="focus-item">
+          <div class="focus-number">01</div>
+          <span class="focus-icon">🤖</span>
+          <h3 class="focus-title">AI & Automation</h3>
+          <p class="focus-desc">Large language models, autonomous agents, and intelligent pipelines — applied to real problems in real markets. We prototype fast and pressure-test early.</p>
+        </div>
+        <div class="focus-item">
+          <div class="focus-number">02</div>
+          <span class="focus-icon">🏘️</span>
+          <h3 class="focus-title">Property Tech</h3>
+          <p class="focus-desc">The African property market is underserved and underbuilt. We explore how software can reduce friction, surface insight, and create new categories.</p>
+        </div>
+        <div class="focus-item">
+          <div class="focus-number">03</div>
+          <span class="focus-icon">⚙️</span>
+          <h3 class="focus-title">Product Thinking</h3>
+          <p class="focus-desc">Good ideas fail without a clear model. We pair product discipline with experiments — defining problems sharply before reaching for a solution.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-inner">
+      <div class="section-header">
+        <p class="section-label">Current experiments</p>
+        <h2 class="section-heading">What we're shipping.</h2>
+        <p class="section-sub">Live, in-progress, and half-baked ideas. All of them useful. Most of them surprising.</p>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- Card 1 -->
+        <div class="project-card">
+          <div class="card-top-bar"></div>
+          <div class="card-content">
+            <div class="card-icon-wrap">🏠</div>
+            <span class="card-tag">PropTech</span>
+            <h3 class="card-title">Property24 Prototype</h3>
+            <p class="card-desc">A reimagined search and discovery experience for South Africa's largest property portal — smarter filtering, contextual market signals, and a faster path to decision.</p>
+            <div class="card-chips">
+              <span class="chip">UX Design</span>
+              <span class="chip">Figma</span>
+              <span class="chip">User Research</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-status">
+              <span class="status-dot"></span> In progress
+            </span>
+            <a href="#" class="card-link">Explore →</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="project-card">
+          <div class="card-top-bar"></div>
+          <div class="card-content">
+            <div class="card-icon-wrap">🤖</div>
+            <span class="card-tag">AI · PropTech</span>
+            <h3 class="card-title">AI Property Agent</h3>
+            <p class="card-desc">A conversational agent that helps buyers navigate the South African property market — answering valuation questions, comparing neighbourhoods, and surfacing red flags in listings.</p>
+            <div class="card-chips">
+              <span class="chip">LLMs</span>
+              <span class="chip">Conversational AI</span>
+              <span class="chip">Property Data</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-status">
+              <span class="status-dot active"></span> Active
+            </span>
+            <a href="#" class="card-link">Explore →</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="project-card">
+          <div class="card-top-bar"></div>
+          <div class="card-content">
+            <div class="card-icon-wrap">🎓</div>
+            <span class="card-tag">Research · Innovation</span>
+            <h3 class="card-title">MBA Innovation Lab</h3>
+            <p class="card-desc">A capstone research project exploring how proptech startups can scale in emerging markets — combining lean methodology, market analysis, and stakeholder strategy.</p>
+            <div class="card-chips">
+              <span class="chip">Strategy</span>
+              <span class="chip">Lean Startup</span>
+              <span class="chip">Market Research</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-status">
+              <span class="status-dot"></span> Ongoing
+            </span>
+            <a href="#" class="card-link">Explore →</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-orb-1"></div>
+    <div class="contact-orb-2"></div>
+
+    <div class="contact-inner">
+      <p class="section-label">Get in touch</p>
+      <h2>
+        Got an idea?<br />
+        <span class="gradient-text">Let's experiment.</span>
+      </h2>
+      <p>
+        We're open to collabs, conversations, and curious people. If you're building in property tech or AI — or just want to compare notes — reach out.
+      </p>
+      <a href="mailto:hello@blurplelab.com" class="contact-email-btn">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <rect x="2" y="4" width="14" height="10" rx="1.5" stroke="#6366F1" stroke-width="1.5"/>
+          <path d="M2 6l7 5 7-5" stroke="#6366F1" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        hello@blurplelab.com
+      </a>
+      <div class="contact-divider"></div>
+      <div class="contact-location">
+        <span class="location-dot"></span>
+        Based in Cape Town, South Africa
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="footer-logo">BlurpleLab</a>
+    <span class="footer-copy">&copy; 2026 BlurpleLab. All rights reserved.</span>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('mobileMenu').classList.toggle('open');
+    }
+
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('nav');
+      if (!nav.contains(e.target)) {
+        document.getElementById('mobileMenu').classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>
