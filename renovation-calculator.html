@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Renovation Cost Estimator | Dwelly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #1A3C6E;
+      --red:     #E8001A;
+      --red-dk:  #C4001A;
+      --bg:      #F0F2F4;
+      --white:   #FFFFFF;
+      --border:  #DDDDDD;
+      --text:    #333333;
+      --mid:     #666666;
+      --light:   #999999;
+      --sel-bg:  #EEF4FF;
+      --sel-bd:  #1A3C6E;
+      --font:    'Roboto', Arial, sans-serif;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      background: var(--navy);
+      height: 30px;
+      display: flex;
+      align-items: center;
+    }
+    .topbar-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      width: 100%;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 20px;
+    }
+    .topbar a { color: rgba(255,255,255,0.7); font-size: 11px; }
+    .topbar a:hover { color: #fff; }
+    .topbar-sep { width: 1px; height: 11px; background: rgba(255,255,255,0.2); }
+
+    /* ── NAV ── */
+    .nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+    .nav-logo {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--red);
+      margin-right: 32px;
+      flex-shrink: 0;
+    }
+    .nav-links {
+      display: flex;
+      height: 60px;
+      align-items: stretch;
+    }
+    .nav-links a {
+      display: flex;
+      align-items: center;
+      padding: 0 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text);
+      border-bottom: 3px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: var(--red); border-bottom-color: var(--red); }
+    .nav-links a.active { font-weight: 600; }
+    .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 7px 14px;
+      border: 1.5px solid var(--border);
+      border-radius: 4px;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text);
+      background: var(--white);
+      cursor: pointer;
+      transition: border-color 0.15s;
+      text-decoration: none;
+    }
+    .back-btn:hover { border-color: #999; color: var(--text); }
+
+    /* ── PAGE ── */
+    .page {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.4px;
+      margin-bottom: 6px;
+    }
+
+    .page-sub {
+      font-size: 14px;
+      color: var(--light);
+      margin-bottom: 32px;
+    }
+
+    /* ── ROOM GRID ── */
+    .room-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .room-card {
+      background: var(--white);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 20px;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+      user-select: none;
+    }
+
+    .room-card:hover {
+      border-color: #AABBDD;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+
+    .room-card.selected {
+      border-color: var(--sel-bd);
+      background: var(--sel-bg);
+      box-shadow: 0 2px 12px rgba(26,60,110,0.10);
+    }
+
+    .room-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .room-icon { font-size: 28px; line-height: 1; }
+
+    .check-circle {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      border: 2px solid var(--border);
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .room-card.selected .check-circle {
+      background: var(--navy);
+      border-color: var(--navy);
+    }
+
+    .check-circle svg { display: none; }
+    .room-card.selected .check-circle svg { display: block; }
+
+    .room-name {
+      font-size: 14.5px;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    /* Finish toggle — hidden until selected */
+    .finish-row {
+      display: none;
+      margin-top: 14px;
+      border-top: 1px solid #D4E0F0;
+      padding-top: 12px;
+    }
+
+    .room-card.selected .finish-row { display: flex; gap: 6px; }
+
+    .finish-btn {
+      flex: 1;
+      padding: 5px 0;
+      border: 1.5px solid #C8D5E8;
+      border-radius: 4px;
+      background: var(--white);
+      font-family: var(--font);
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--mid);
+      cursor: pointer;
+      transition: background 0.12s, color 0.12s, border-color 0.12s;
+      text-align: center;
+    }
+
+    .finish-btn:hover:not(.on) { border-color: var(--navy); color: var(--navy); }
+
+    .finish-btn.on {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+    }
+
+    /* Size slider — hidden until selected */
+    .size-row {
+      display: none;
+      margin-top: 12px;
+    }
+
+    .room-card.selected .size-row { display: block; }
+
+    .size-label-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+
+    .size-label {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--mid);
+    }
+
+    .size-value {
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .size-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 4px;
+      border-radius: 2px;
+      background: #C8D5E8;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .size-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--navy);
+      cursor: pointer;
+      border: 3px solid #fff;
+      box-shadow: 0 1px 4px rgba(26,60,110,0.3);
+    }
+
+    .size-slider::-moz-range-thumb {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--navy);
+      cursor: pointer;
+      border: 3px solid #fff;
+      box-shadow: 0 1px 4px rgba(26,60,110,0.3);
+    }
+
+    /* ── SUMMARY ── */
+    .summary {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    }
+
+    .summary-head {
+      padding: 16px 20px;
+      border-bottom: 1px solid #EEEEEE;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+    }
+
+    .summary-head-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--light);
+    }
+
+    .summary-head-count {
+      font-size: 12px;
+      color: var(--light);
+    }
+
+    .summary-body { padding: 0 20px; }
+
+    .summary-empty {
+      padding: 28px 0;
+      text-align: center;
+      color: var(--light);
+      font-size: 13.5px;
+    }
+
+    .summary-empty span {
+      display: block;
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .summary-lines { padding: 8px 0; }
+
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 9px 0;
+      border-bottom: 1px solid #F2F2F2;
+      gap: 12px;
+    }
+
+    .summary-line:last-child { border-bottom: none; }
+
+    .summary-line-name {
+      font-size: 13.5px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .summary-line-finish {
+      font-size: 11px;
+      color: var(--light);
+      margin-top: 1px;
+    }
+
+    .summary-line-cost {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--navy);
+      white-space: nowrap;
+    }
+
+    .summary-foot {
+      border-top: 2px solid #EEEEEE;
+      padding: 18px 20px 20px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 16px;
+    }
+
+    .total-label {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--mid);
+    }
+
+    .total-value {
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .total-value.zero { color: #CCCCCC; }
+
+    .cta-btn {
+      width: 100%;
+      padding: 13px;
+      background: var(--navy);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+
+    .cta-btn:hover { background: #15305A; }
+
+    .disclaimer {
+      margin-top: 16px;
+      font-size: 11px;
+      color: var(--light);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 480px) {
+      .room-grid { grid-template-columns: 1fr; }
+      .page { padding: 28px 16px 48px; }
+      .total-value { font-size: 26px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a href="#">Sign In</a>
+      <div class="topbar-sep"></div>
+      <a href="#">Register</a>
+      <div class="topbar-sep"></div>
+      <a href="#">Advertise</a>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="dwelly-prototype.html" class="nav-logo">Dwelly</a>
+      <div class="nav-links">
+        <a href="dwelly-prototype.html">Buy</a>
+        <a href="#">Rent</a>
+        <a href="#">Sell</a>
+        <a href="#">Commercial</a>
+        <a href="#">Advice</a>
+        <a href="#" class="active">Calculators</a>
+      </div>
+      <div class="nav-right">
+        <a href="dwelly-prototype.html" class="back-btn">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+            <path d="M7.5 1.5L3 6l4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Back to listings
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- PAGE -->
+  <div class="page">
+
+    <h1 class="page-title">Renovation Cost Estimator</h1>
+    <p class="page-sub">Select the rooms you want to renovate</p>
+
+    <!-- ROOM GRID -->
+    <div class="room-grid" id="roomGrid">
+
+      <div class="room-card" id="card-kitchen" onclick="toggleRoom('kitchen')">
+        <div class="room-card-top">
+          <span class="room-icon">🍳</span>
+          <div class="check-circle">
+            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="room-name">Kitchen</div>
+        <div class="finish-row" id="finish-kitchen">
+          <button class="finish-btn" onclick="setFinish(event,'kitchen','basic')">Basic</button>
+          <button class="finish-btn on" onclick="setFinish(event,'kitchen','standard')">Standard</button>
+          <button class="finish-btn" onclick="setFinish(event,'kitchen','premium')">Premium</button>
+        </div>
+        <div class="size-row" onclick="event.stopPropagation()">
+          <div class="size-label-row">
+            <span class="size-label">Room size</span>
+            <span class="size-value" id="sizeVal-kitchen">20 m²</span>
+          </div>
+          <input class="size-slider" type="range" min="5" max="80" value="20" onclick="event.stopPropagation()" oninput="setSize(event,'kitchen',this.value)">
+        </div>
+      </div>
+
+      <div class="room-card" id="card-bathroom" onclick="toggleRoom('bathroom')">
+        <div class="room-card-top">
+          <span class="room-icon">🚿</span>
+          <div class="check-circle">
+            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="room-name">Bathroom</div>
+        <div class="finish-row" id="finish-bathroom">
+          <button class="finish-btn" onclick="setFinish(event,'bathroom','basic')">Basic</button>
+          <button class="finish-btn on" onclick="setFinish(event,'bathroom','standard')">Standard</button>
+          <button class="finish-btn" onclick="setFinish(event,'bathroom','premium')">Premium</button>
+        </div>
+        <div class="size-row" onclick="event.stopPropagation()">
+          <div class="size-label-row">
+            <span class="size-label">Room size</span>
+            <span class="size-value" id="sizeVal-bathroom">20 m²</span>
+          </div>
+          <input class="size-slider" type="range" min="5" max="80" value="20" onclick="event.stopPropagation()" oninput="setSize(event,'bathroom',this.value)">
+        </div>
+      </div>
+
+      <div class="room-card" id="card-masterbed" onclick="toggleRoom('masterbed')">
+        <div class="room-card-top">
+          <span class="room-icon">🛏️</span>
+          <div class="check-circle">
+            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="room-name">Master Bedroom</div>
+        <div class="finish-row" id="finish-masterbed">
+          <button class="finish-btn" onclick="setFinish(event,'masterbed','basic')">Basic</button>
+          <button class="finish-btn on" onclick="setFinish(event,'masterbed','standard')">Standard</button>
+          <button class="finish-btn" onclick="setFinish(event,'masterbed','premium')">Premium</button>
+        </div>
+        <div class="size-row" onclick="event.stopPropagation()">
+          <div class="size-label-row">
+            <span class="size-label">Room size</span>
+            <span class="size-value" id="sizeVal-masterbed">20 m²</span>
+          </div>
+          <input class="size-slider" type="range" min="5" max="80" value="20" onclick="event.stopPropagation()" oninput="setSize(event,'masterbed',this.value)">
+        </div>
+      </div>
+
+      <div class="room-card" id="card-living" onclick="toggleRoom('living')">
+        <div class="room-card-top">
+          <span class="room-icon">🛋️</span>
+          <div class="check-circle">
+            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="room-name">Living Room</div>
+        <div class="finish-row" id="finish-living">
+          <button class="finish-btn" onclick="setFinish(event,'living','basic')">Basic</button>
+          <button class="finish-btn on" onclick="setFinish(event,'living','standard')">Standard</button>
+          <button class="finish-btn" onclick="setFinish(event,'living','premium')">Premium</button>
+        </div>
+        <div class="size-row" onclick="event.stopPropagation()">
+          <div class="size-label-row">
+            <span class="size-label">Room size</span>
+            <span class="size-value" id="sizeVal-living">20 m²</span>
+          </div>
+          <input class="size-slider" type="range" min="5" max="80" value="20" onclick="event.stopPropagation()" oninput="setSize(event,'living',this.value)">
+        </div>
+      </div>
+
+      <div class="room-card" id="card-secondbed" onclick="toggleRoom('secondbed')">
+        <div class="room-card-top">
+          <span class="room-icon">🛏</span>
+          <div class="check-circle">
+            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="room-name">Second Bedroom</div>
+        <div class="finish-row" id="finish-secondbed">
+          <button class="finish-btn" onclick="setFinish(event,'secondbed','basic')">Basic</button>
+          <button class="finish-btn on" onclick="setFinish(event,'secondbed','standard')">Standard</button>
+          <button class="finish-btn" onclick="setFinish(event,'secondbed','premium')">Premium</button>
+        </div>
+        <div class="size-row" onclick="event.stopPropagation()">
+          <div class="size-label-row">
+            <span class="size-label">Room size</span>
+            <span class="size-value" id="sizeVal-secondbed">20 m²</span>
+          </div>
+          <input class="size-slider" type="range" min="5" max="80" value="20" onclick="event.stopPropagation()" oninput="setSize(event,'secondbed',this.value)">
+        </div>
+      </div>
+
+      <div class="room-card" id="card-outdoor" onclick="toggleRoom('outdoor')">
+        <div class="room-card-top">
+          <span class="room-icon">🌿</span>
+          <div class="check-circle">
+            <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+              <path d="M1 4l3 3 5-6" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="room-name">Outdoor / Garden</div>
+        <div class="finish-row" id="finish-outdoor">
+          <button class="finish-btn" onclick="setFinish(event,'outdoor','basic')">Basic</button>
+          <button class="finish-btn on" onclick="setFinish(event,'outdoor','standard')">Standard</button>
+          <button class="finish-btn" onclick="setFinish(event,'outdoor','premium')">Premium</button>
+        </div>
+        <div class="size-row" onclick="event.stopPropagation()">
+          <div class="size-label-row">
+            <span class="size-label">Room size</span>
+            <span class="size-value" id="sizeVal-outdoor">20 m²</span>
+          </div>
+          <input class="size-slider" type="range" min="5" max="80" value="20" onclick="event.stopPropagation()" oninput="setSize(event,'outdoor',this.value)">
+        </div>
+      </div>
+
+    </div><!-- /room-grid -->
+
+    <!-- SUMMARY -->
+    <div class="summary">
+      <div class="summary-head">
+        <span class="summary-head-title">Your Estimate</span>
+        <span class="summary-head-count" id="roomCount">0 rooms selected</span>
+      </div>
+
+      <div class="summary-body">
+        <div class="summary-empty" id="summaryEmpty">
+          <span>🏠</span>
+          Select rooms above to see your cost estimate
+        </div>
+        <div class="summary-lines" id="summaryLines" style="display:none;"></div>
+      </div>
+
+      <div class="summary-foot">
+        <div class="total-row">
+          <span class="total-label">Total</span>
+          <span class="total-value zero" id="totalValue">R 0</span>
+        </div>
+        <button class="cta-btn">
+          Get quotes from contractors
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M2 7h10M7.5 2.5L12 7l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <p class="disclaimer">Cost estimates are indicative and based on Cape Town market averages. Actual costs may vary.</p>
+
+  </div><!-- /page -->
+
+  <script>
+    const COSTS = {
+      kitchen:   { basic: 25000, standard: 60000,  premium: 120000 },
+      bathroom:  { basic: 15000, standard: 35000,  premium: 70000  },
+      masterbed: { basic: 10000, standard: 25000,  premium: 50000  },
+      living:    { basic: 12000, standard: 30000,  premium: 60000  },
+      secondbed: { basic: 8000,  standard: 20000,  premium: 40000  },
+      outdoor:   { basic: 10000, standard: 40000,  premium: 90000  },
+    };
+
+    const LABELS = {
+      kitchen:   'Kitchen',
+      bathroom:  'Bathroom',
+      masterbed: 'Master Bedroom',
+      living:    'Living Room',
+      secondbed: 'Second Bedroom',
+      outdoor:   'Outdoor / Garden',
+    };
+
+    // State: roomId → { finish, size } or absent if not selected
+    const state = {};
+
+    function toggleRoom(id) {
+      if (state[id]) {
+        delete state[id];
+        document.getElementById('card-' + id).classList.remove('selected');
+      } else {
+        state[id] = { finish: 'standard', size: 20 };
+        document.getElementById('card-' + id).classList.add('selected');
+      }
+      render();
+    }
+
+    function setFinish(e, id, level) {
+      e.stopPropagation();
+      state[id].finish = level;
+      document.querySelectorAll('#finish-' + id + ' .finish-btn').forEach((btn, i) => {
+        btn.classList.toggle('on', ['basic','standard','premium'][i] === level);
+      });
+      render();
+    }
+
+    function setSize(e, id, val) {
+      e.stopPropagation();
+      state[id].size = parseInt(val);
+      document.getElementById('sizeVal-' + id).textContent = val + ' m²';
+      render();
+    }
+
+    function fmt(n) {
+      return 'R ' + n.toLocaleString('en-ZA');
+    }
+
+    function render() {
+      const selected = Object.keys(state);
+      const count = selected.length;
+
+      document.getElementById('roomCount').textContent =
+        count === 0 ? '0 rooms selected' :
+        count === 1 ? '1 room selected' :
+        count + ' rooms selected';
+
+      const empty = document.getElementById('summaryEmpty');
+      const lines = document.getElementById('summaryLines');
+
+      if (count === 0) {
+        empty.style.display = '';
+        lines.style.display = 'none';
+        document.getElementById('totalValue').textContent = 'R 0';
+        document.getElementById('totalValue').classList.add('zero');
+        return;
+      }
+
+      empty.style.display = 'none';
+      lines.style.display = '';
+
+      let total = 0;
+      let html = '';
+      for (const id of selected) {
+        const { finish, size } = state[id];
+        const rate = COSTS[id][finish] / 20;
+        const cost = Math.round(rate * size);
+        total += cost;
+        const finishLabel = finish.charAt(0).toUpperCase() + finish.slice(1);
+        html += `
+          <div class="summary-line">
+            <div>
+              <div class="summary-line-name">${LABELS[id]}</div>
+              <div class="summary-line-finish">${finishLabel} · ${size} m²</div>
+            </div>
+            <span class="summary-line-cost">${fmt(cost)}</span>
+          </div>`;
+      }
+      lines.innerHTML = html;
+
+      const tv = document.getElementById('totalValue');
+      tv.textContent = fmt(total);
+      tv.classList.remove('zero');
+    }
+  </script>
+
+</body>
+</html>
