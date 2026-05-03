@@ -1,0 +1,2684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dwelly - Cape Town City Centre Properties for Sale</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --p24-red:        #E8001A;
+      --p24-red-dark:   #C4001A;
+      --p24-navy:       #1A3C6E;
+      --text-dark:      #333333;
+      --text-mid:       #555555;
+      --text-light:     #888888;
+      --text-xlight:    #AAAAAA;
+      --bg-page:        #F0F2F4;
+      --bg-white:       #FFFFFF;
+      --bg-nav:         #FFFFFF;
+      --bg-filter:      #FFFFFF;
+      --border:         #DDDDDD;
+      --border-light:   #EEEEEE;
+      --price-color:    #1D1D1D;
+      --link-blue:      #1A5EB8;
+      --badge-green:    #2E7D32;
+      --badge-orange:   #E65100;
+      --badge-grey:     #546E7A;
+      --shadow-card:    0 1px 4px rgba(0,0,0,0.12), 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-hover:   0 4px 16px rgba(0,0,0,0.16);
+      --radius-card:    4px;
+      --radius-badge:   3px;
+      --radius-btn:     4px;
+      --font:           'Roboto', Arial, sans-serif;
+      --max-w:          1200px;
+      --pgp-gold:       #C9A84C;
+      --pgp-dark:       #154734;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-page);
+      color: var(--text-dark);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:hover { color: var(--p24-red); }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    /* ── TOP NAV ──────────────────────────────────── */
+    .topbar {
+      background: #1A3C6E;
+      height: 30px;
+      display: flex;
+      align-items: center;
+    }
+
+    .topbar-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 16px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 20px;
+    }
+
+    .topbar a {
+      color: rgba(255,255,255,0.75);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    .topbar a:hover { color: #fff; }
+
+    .topbar-divider {
+      width: 1px;
+      height: 12px;
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* Main nav */
+    .nav-main {
+      background: var(--bg-nav);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 16px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      margin-right: 32px;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-text .p24 { color: var(--p24-red); }
+    .logo-text .dot { color: var(--p24-red); }
+
+    .nav-links {
+      display: flex;
+      align-items: stretch;
+      height: 60px;
+      gap: 0;
+    }
+
+    .nav-links li a {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-dark);
+      border-bottom: 3px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .nav-links li a:hover,
+    .nav-links li a.active {
+      color: var(--p24-red);
+      border-bottom-color: var(--p24-red);
+    }
+
+    .nav-links li a.active {
+      font-weight: 600;
+    }
+
+    .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-btn {
+      padding: 8px 18px;
+      border-radius: var(--radius-btn);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s;
+    }
+
+    .nav-btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text-dark);
+    }
+
+    .nav-btn-outline:hover { border-color: #999; }
+
+    .nav-btn-primary {
+      background: var(--p24-red);
+      color: #fff;
+    }
+
+    .nav-btn-primary:hover { background: var(--p24-red-dark); }
+
+    /* ── SEARCH BAR ───────────────────────────────── */
+    .search-bar {
+      background: var(--p24-navy);
+      padding: 16px 0;
+    }
+
+    .search-bar-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .search-tabs {
+      display: flex;
+      gap: 0;
+      border-radius: var(--radius-btn) var(--radius-btn) 0 0;
+      overflow: hidden;
+    }
+
+    .search-tab {
+      padding: 8px 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      cursor: pointer;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .search-tab.active {
+      background: var(--bg-white);
+      color: var(--p24-red);
+      font-weight: 600;
+    }
+
+    .search-tab:hover:not(.active) { background: rgba(255,255,255,0.14); color: #fff; }
+
+    .search-input-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: var(--bg-white);
+      border-radius: 0 var(--radius-btn) var(--radius-btn) var(--radius-btn);
+      overflow: hidden;
+      border: 2px solid transparent;
+      transition: border-color 0.2s;
+    }
+
+    .search-input-wrap:focus-within {
+      border-color: var(--p24-red);
+    }
+
+    .search-icon {
+      padding: 0 12px;
+      color: var(--text-light);
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    .search-input {
+      flex: 1;
+      height: 42px;
+      border: none;
+      outline: none;
+      font-family: var(--font);
+      font-size: 14px;
+      color: var(--text-dark);
+      padding-right: 8px;
+    }
+
+    .search-submit {
+      background: var(--p24-red);
+      color: #fff;
+      border: none;
+      padding: 0 24px;
+      height: 42px;
+      font-family: var(--font);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .search-submit:hover { background: var(--p24-red-dark); }
+
+    /* ── BREADCRUMB ───────────────────────────────── */
+    .breadcrumb {
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border-light);
+      padding: 10px 0;
+    }
+
+    .breadcrumb-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: var(--text-light);
+      flex-wrap: wrap;
+    }
+
+    .breadcrumb a {
+      color: var(--link-blue);
+    }
+
+    .breadcrumb a:hover { text-decoration: underline; }
+
+    .breadcrumb-sep { color: var(--text-xlight); }
+
+    .breadcrumb-current {
+      color: var(--text-mid);
+      font-weight: 500;
+    }
+
+    /* ── PAGE CONTENT ─────────────────────────────── */
+    .page-wrap {
+      max-width: var(--max-w);
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 24px 40px;
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 20px;
+      align-items: start;
+      box-sizing: border-box;
+    }
+
+    /* ── LISTINGS COLUMN ──────────────────────────── */
+    .listings-col {
+      min-width: 0; /* prevents grid column from overflowing */
+    }
+
+    /* Page header */
+    .listings-header {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 16px 20px;
+      margin-bottom: 16px;
+    }
+
+    .listings-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .listings-count {
+      font-size: 13px;
+      color: var(--text-light);
+    }
+
+    .listings-count strong { color: var(--text-mid); }
+
+    /* Filter / sort bar */
+    .filter-bar {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .filter-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+      margin-right: 4px;
+    }
+
+    .filter-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-mid);
+      background: var(--bg-white);
+      cursor: pointer;
+      transition: border-color 0.15s, color 0.15s, background 0.15s;
+      white-space: nowrap;
+    }
+
+    .filter-chip:hover {
+      border-color: var(--p24-red);
+      color: var(--p24-red);
+    }
+
+    .filter-chip.active {
+      background: var(--p24-red);
+      border-color: var(--p24-red);
+      color: #fff;
+    }
+
+    .filter-chip-x {
+      font-size: 14px;
+      line-height: 1;
+      opacity: 0.7;
+    }
+
+    .filter-sep {
+      width: 1px;
+      height: 20px;
+      background: var(--border);
+      flex-shrink: 0;
+    }
+
+    .sort-wrap {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sort-label {
+      font-size: 12px;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    .sort-select {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-btn);
+      padding: 6px 28px 6px 10px;
+      font-family: var(--font);
+      font-size: 13px;
+      color: var(--text-dark);
+      background: var(--bg-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E") no-repeat right 10px center;
+      -webkit-appearance: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .sort-select:focus { border-color: var(--p24-red); }
+
+    /* ── LISTING CARDS ────────────────────────────── */
+    .listings-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .listing-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+      transition: box-shadow 0.2s, transform 0.2s;
+      cursor: pointer;
+    }
+
+    .listing-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-1px);
+    }
+
+    .card-inner {
+      display: grid;
+      grid-template-columns: 300px 1fr;
+    }
+
+    /* Image side */
+    .card-image-wrap {
+      position: relative;
+      overflow: hidden;
+      background: #E8E8E8;
+      flex-shrink: 0;
+    }
+
+    .card-image {
+      width: 300px;
+      height: 230px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .listing-card:hover .card-image { transform: scale(1.03); }
+
+    /* Image badges */
+    .img-badges {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .img-badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: var(--radius-badge);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: #fff;
+    }
+
+    .badge-transfer  { background: #1565C0; }
+    .badge-onshow    { background: #2E7D32; }
+    .badge-reduced   { background: var(--p24-red); }
+    .badge-underoffer { background: #546E7A; }
+    .badge-new       { background: #E65100; }
+
+    /* Photo count */
+    .photo-count {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.55);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Thumbnail strip */
+    .card-thumbs {
+      display: flex;
+      gap: 2px;
+      height: 60px;
+      overflow: hidden;
+      background: #D0D0D0;
+    }
+
+    .thumb {
+      flex: 1;
+      object-fit: cover;
+      transition: opacity 0.2s;
+    }
+
+    .thumb:hover { opacity: 0.85; }
+
+    /* Details side */
+    .card-details {
+      padding: 16px 20px;
+      display: flex;
+      flex-direction: column;
+      min-width: 0; /* prevents text overflow from blowing out grid column */
+    }
+
+    .card-type-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      margin-bottom: 6px;
+    }
+
+    .card-price {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--price-color);
+      letter-spacing: -0.3px;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+
+    .card-price-sub {
+      font-size: 11px;
+      color: var(--text-light);
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+      line-height: 1.4;
+    }
+
+    .card-address {
+      font-size: 12px;
+      color: var(--text-light);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+    }
+
+    .card-address svg { flex-shrink: 0; margin-top: 1px; }
+
+    /* Features row */
+    .card-features {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 10px 0;
+      border-top: 1px solid var(--border-light);
+      border-bottom: 1px solid var(--border-light);
+      margin-bottom: 12px;
+    }
+
+    .feature {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-mid);
+    }
+
+    .feature-icon {
+      color: var(--text-light);
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .feature-sep {
+      width: 1px;
+      height: 14px;
+      background: var(--border);
+    }
+
+    /* Description */
+    .card-desc {
+      font-size: 12.5px;
+      color: var(--text-mid);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      margin-bottom: auto;
+    }
+
+    /* Agent row */
+    .card-agent {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .agent-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .agent-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: var(--bg-page);
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .agent-name {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--text-mid);
+    }
+
+    .agent-agency {
+      font-size: 10.5px;
+      color: var(--text-light);
+      margin-top: 1px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .action-btn {
+      padding: 7px 14px;
+      border-radius: var(--radius-btn);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .action-btn-primary {
+      background: var(--p24-red);
+      color: #fff;
+    }
+
+    .action-btn-primary:hover { background: var(--p24-red-dark); }
+
+    .action-btn-outline {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      color: var(--text-mid);
+    }
+
+    .action-btn-outline:hover {
+      border-color: var(--p24-red);
+      color: var(--p24-red);
+    }
+
+    /* ── PAGINATION ───────────────────────────────── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 24px;
+      padding: 16px 0;
+    }
+
+    .page-btn {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-btn);
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1.5px solid var(--border);
+      background: var(--bg-white);
+      color: var(--text-mid);
+      transition: all 0.15s;
+    }
+
+    .page-btn:hover { border-color: var(--p24-red); color: var(--p24-red); }
+    .page-btn.active { background: var(--p24-red); border-color: var(--p24-red); color: #fff; font-weight: 700; }
+
+    .page-btn-wide {
+      width: auto;
+      padding: 0 14px;
+    }
+
+    /* ── SIDEBAR ──────────────────────────────────── */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      align-self: start;
+      position: sticky;
+      top: 16px;
+      min-width: 0;
+    }
+
+    .sidebar-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+    }
+
+    .sidebar-heading {
+      background: var(--p24-navy);
+      color: #fff;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+
+    .sidebar-body {
+      padding: 16px;
+    }
+
+    .sidebar-body p {
+      font-size: 12.5px;
+      color: var(--text-mid);
+      line-height: 1.6;
+      margin-bottom: 12px;
+    }
+
+    .sidebar-input {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-btn);
+      font-family: var(--font);
+      font-size: 13px;
+      color: var(--text-dark);
+      outline: none;
+      margin-bottom: 10px;
+      transition: border-color 0.2s;
+    }
+
+    .sidebar-input:focus { border-color: var(--p24-red); }
+
+    .sidebar-btn {
+      width: 100%;
+      padding: 10px;
+      background: var(--p24-red);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-btn);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .sidebar-btn:hover { background: var(--p24-red-dark); }
+
+    /* Filter sidebar card */
+    .filter-group {
+      margin-bottom: 16px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .filter-group:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+    .filter-group-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+
+    .filter-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .filter-select {
+      width: 100%;
+      padding: 8px 28px 8px 10px;
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-btn);
+      font-family: var(--font);
+      font-size: 12.5px;
+      color: var(--text-mid);
+      background: var(--bg-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E") no-repeat right 8px center;
+      -webkit-appearance: none;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .filter-select:focus { border-color: var(--p24-red); }
+
+    .filter-checkboxes {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .filter-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12.5px;
+      color: var(--text-mid);
+      cursor: pointer;
+    }
+
+    .filter-checkbox input[type="checkbox"] {
+      accent-color: var(--p24-red);
+      width: 14px;
+      height: 14px;
+      cursor: pointer;
+    }
+
+    .filter-apply {
+      width: 100%;
+      padding: 10px;
+      background: var(--p24-red);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-btn);
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 14px;
+      transition: background 0.15s;
+    }
+
+    .filter-apply:hover { background: var(--p24-red-dark); }
+
+    /* ── SUBURB EXPERT CARD ──────────────────────── */
+    .expert-card {
+      background: var(--bg-white);
+      border: 1px solid #dfdfdf;
+      border-color: #9ea5b133;
+      border-bottom-color: #d8dce3;
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: none;
+      color: #0f0c36;
+      font-weight: 500;
+      font-size: 17px;
+      padding-bottom: 20px;
+      margin-bottom: 20px;
+    }
+
+    .expert-heading {
+      background: var(--p24-navy);
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .expert-badge {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .expert-badge-icon {
+      width: 20px;
+      height: 20px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .expert-badge-text {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .expert-sponsored {
+      font-size: 10px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.45);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    /* Video reel */
+    .expert-reel {
+      height: 150px;
+      background: #0D1B2A;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .expert-reel::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 30% 40%, rgba(26,60,110,0.45) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 70%, rgba(26,90,184,0.25) 0%, transparent 55%);
+      pointer-events: none;
+    }
+
+    .expert-reel::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(255,255,255,0.015) 3px,
+        rgba(255,255,255,0.015) 4px
+      );
+      pointer-events: none;
+    }
+
+    .reel-play-btn {
+      width: 46px;
+      height: 46px;
+      background: rgba(255,255,255,0.12);
+      border: 2px solid rgba(255,255,255,0.45);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      z-index: 1;
+      transition: background 0.2s, transform 0.2s, border-color 0.2s;
+    }
+
+    .reel-play-btn:hover {
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.8);
+      transform: scale(1.08);
+    }
+
+    .reel-label {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.8);
+      position: relative;
+      z-index: 1;
+      letter-spacing: 0.01em;
+    }
+
+    .reel-footer {
+      position: absolute;
+      bottom: 10px;
+      left: 12px;
+      right: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      z-index: 1;
+    }
+
+    .reel-dots {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .reel-dot {
+      height: 5px;
+      width: 5px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.28);
+      transition: width 0.2s, background 0.2s;
+    }
+
+    .reel-dot.active {
+      width: 16px;
+      background: #fff;
+    }
+
+    .reel-duration {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      background: rgba(0,0,0,0.4);
+      padding: 2px 7px;
+      border-radius: 3px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Expert body */
+    .expert-body { padding: 14px 16px 16px; }
+
+    .expert-agent {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .expert-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--p24-navy);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      flex-shrink: 0;
+      border: 2px solid rgba(26,60,110,0.15);
+    }
+
+    .expert-agent-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+
+    .expert-agency {
+      font-size: 11px;
+      color: var(--text-light);
+      margin-bottom: 7px;
+    }
+
+    .expert-specialist-pill {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 600;
+      color: #1A5EB8;
+      background: #EBF3FF;
+      border: 1px solid #BDD6F5;
+      padding: 2px 9px;
+      border-radius: 20px;
+    }
+
+    /* Stats grid */
+    .expert-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border-light);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-btn);
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+
+    .expert-stat {
+      background: var(--bg-white);
+      padding: 10px 8px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--p24-navy);
+      letter-spacing: -0.5px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-light);
+      line-height: 1.3;
+    }
+
+    /* Star rating */
+    .expert-rating {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .stars { display: flex; gap: 1px; line-height: 1; }
+    .star { font-size: 14px; color: #F59E0B; }
+
+    .rating-score {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .rating-count {
+      font-size: 11.5px;
+      color: var(--text-light);
+    }
+
+    /* Expert buttons */
+    .expert-btn-primary {
+      width: 100%;
+      padding: 9px;
+      background: var(--p24-navy);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-btn);
+      font-family: var(--font);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .expert-btn-primary:hover { background: #15305A; }
+
+    .expert-btn-outline {
+      width: 100%;
+      padding: 9px;
+      background: transparent;
+      color: var(--p24-navy);
+      border: 1.5px solid var(--p24-navy);
+      border-radius: var(--radius-btn);
+      font-family: var(--font);
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+      margin-bottom: 13px;
+      display: block;
+    }
+
+    .expert-btn-outline:hover { background: #EBF3FF; }
+
+    .expert-see-all {
+      display: block;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--link-blue);
+      transition: color 0.15s;
+    }
+
+    .expert-see-all:hover {
+      color: var(--p24-navy);
+      text-decoration: underline;
+    }
+
+    /* ── SOLD BY US BLOCK ────────────────────────── */
+    .sold-block {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      background: var(--bg-white);
+      box-shadow: var(--shadow-card);
+    }
+
+    .sold-block-header {
+      background: var(--pgp-dark);
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .sold-agency-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .sold-agency-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.15);
+      border: 1.5px solid rgba(255,255,255,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -1px;
+      flex-shrink: 0;
+    }
+
+    .sold-agency-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .sold-agency-sub {
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 2px;
+    }
+
+    .sold-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.28);
+      color: #fff;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      padding: 5px 11px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+
+    .sold-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.7);
+      flex-shrink: 0;
+    }
+
+    /* Stats bar */
+    .sold-stats-bar {
+      background: #F7F5EF;
+      border-bottom: 1px solid #EAE4D3;
+      padding: 14px 20px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .sold-stat-item {
+      text-align: center;
+      padding: 0 12px;
+      border-right: 1px solid #DDD8C4;
+    }
+
+    .sold-stat-item:first-child { padding-left: 0; text-align: left; }
+    .sold-stat-item:last-child  { border-right: none; padding-right: 0; text-align: right; }
+
+    .sold-stat-num {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--pgp-dark);
+      letter-spacing: -0.5px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .sold-stat-num .gold { color: var(--pgp-gold); }
+
+    .sold-stat-label {
+      font-size: 10px;
+      color: var(--text-light);
+      line-height: 1.35;
+    }
+
+    /* Horizontal scroll */
+    .sold-scroll-wrap {
+      background: #EDEAE2;
+      padding: 14px 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(201,168,76,0.4) transparent;
+    }
+
+    .sold-scroll-wrap::-webkit-scrollbar { height: 3px; }
+    .sold-scroll-wrap::-webkit-scrollbar-track { background: transparent; }
+    .sold-scroll-wrap::-webkit-scrollbar-thumb {
+      background: rgba(201,168,76,0.45);
+      border-radius: 4px;
+    }
+
+    .sold-cards-row {
+      display: flex;
+      gap: 12px;
+      width: max-content;
+    }
+
+    .sold-prop-card {
+      width: 196px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .sold-prop-card:hover {
+      box-shadow: 0 6px 18px rgba(0,0,0,0.13);
+      transform: translateY(-2px);
+    }
+
+    .sold-img-wrap {
+      position: relative;
+      height: 124px;
+      overflow: hidden;
+      background: #ccc;
+    }
+
+    .sold-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+
+    .sold-prop-card:hover .sold-img { transform: scale(1.06); }
+
+    .sold-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(28,28,46,0.38);
+    }
+
+    .sold-stamp {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-10deg);
+      border: 2.5px solid #154734;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      padding: 4px 10px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      background: rgba(21,71,52,0.82);
+      white-space: nowrap;
+    }
+
+    .sold-days-badge {
+      position: absolute;
+      bottom: 7px;
+      right: 8px;
+      background: rgba(0,0,0,0.58);
+      color: rgba(255,255,255,0.78);
+      font-size: 9.5px;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    .sold-card-body { padding: 10px 12px; }
+
+    .sold-price {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-dark);
+      letter-spacing: -0.3px;
+      margin-bottom: 4px;
+    }
+
+    .sold-address {
+      font-size: 10.5px;
+      color: var(--text-light);
+      line-height: 1.45;
+      margin-bottom: 9px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .sold-agent-row {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .sold-agent-avatar {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+    }
+
+    .sold-agent-name {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-mid);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Footer CTA */
+    .sold-footer {
+      padding: 12px 20px;
+      background: var(--bg-white);
+      border-top: 1px solid var(--border-light);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .sold-footer-text {
+      font-size: 11.5px;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+
+    .sold-footer-text strong { color: var(--text-mid); font-weight: 600; }
+
+    .sold-footer-actions { display: flex; gap: 8px; flex-shrink: 0; }
+
+    .sold-cta-primary {
+      padding: 8px 16px;
+      background: var(--pgp-dark);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-btn);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .sold-cta-primary:hover { background: #0d3527; }
+
+    .sold-cta-outline {
+      padding: 8px 16px;
+      background: transparent;
+      color: var(--pgp-dark);
+      border: 1.5px solid var(--pgp-dark);
+      border-radius: var(--radius-btn);
+      font-family: var(--font);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+
+    .sold-cta-outline:hover { background: #F7F5EF; }
+
+    /* ── MAP CARD ────────────────────────────────── */
+    .map-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+      box-shadow: var(--shadow-card);
+    }
+
+    .map-placeholder {
+      height: 200px;
+      background: #E4ECF4;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .map-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(26,60,110,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26,60,110,0.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      pointer-events: none;
+    }
+
+    .map-placeholder::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.75) 3px, transparent 3px),
+        linear-gradient(90deg, rgba(255,255,255,0.75) 3px, transparent 3px);
+      background-size: 84px 84px;
+      pointer-events: none;
+    }
+
+    .map-pin {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .map-suburb-label {
+      position: relative;
+      z-index: 1;
+      font-size: 11.5px;
+      font-weight: 600;
+      color: var(--text-dark);
+      background: rgba(255,255,255,0.92);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+      white-space: nowrap;
+    }
+
+    .map-footer {
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .map-footer-label {
+      font-size: 11px;
+      color: var(--text-light);
+    }
+
+    .map-view-link {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--link-blue);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      transition: color 0.15s;
+    }
+
+    .map-view-link:hover {
+      color: var(--p24-navy);
+      text-decoration: underline;
+    }
+
+    /* ── REEL MODAL ───────────────────────────────── */
+    .reel-modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.88);
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+    }
+
+    .reel-modal-overlay.open {
+      display: flex;
+    }
+
+    .reel-modal {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .reel-modal-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.12);
+      border: 1.5px solid rgba(255,255,255,0.25);
+      color: #fff;
+      font-size: 16px;
+      line-height: 1;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s, transform 0.15s;
+      z-index: 10;
+    }
+
+    .reel-modal-close:hover {
+      background: rgba(255,255,255,0.22);
+      transform: scale(1.1);
+    }
+
+    .reel-modal-player {
+      width: 320px;
+      height: 570px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+      flex-shrink: 0;
+    }
+
+    .reel-modal-player video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .reel-modal-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.02em;
+      text-align: center;
+    }
+
+    /* ── FOOTER ───────────────────────────────────── */
+    footer {
+      background: #1A3C6E;
+      color: rgba(255,255,255,0.7);
+      margin-top: 32px;
+    }
+
+    .footer-top {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 32px 16px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+
+    .footer-col h4 {
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      letter-spacing: 0.02em;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.55);
+      font-size: 12px;
+      transition: color 0.15s;
+    }
+
+    .footer-col ul li a:hover { color: #fff; }
+
+    .footer-bottom {
+      background: #122A52;
+      padding: 16px;
+      text-align: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.35);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .footer-logo-text {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .footer-logo-text span { color: var(--p24-red); }
+
+    /* ── PROTOTYPE BANNER ─────────────────────────── */
+    .prototype-banner {
+      background: #FFF3CD;
+      border-bottom: 2px solid #FBBF24;
+      padding: 8px 16px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: #92400E;
+    }
+
+    .prototype-banner strong { color: #78350F; }
+
+    /* ── RESPONSIVE ───────────────────────────────── */
+    @media (max-width: 1024px) {
+      .page-wrap {
+        grid-template-columns: 1fr;
+        padding: 20px 20px 40px;
+      }
+      .sidebar {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+      }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 720px) {
+      .page-wrap { padding: 16px 16px 32px; }
+      .card-inner { grid-template-columns: 1fr; }
+      .card-image { width: 100%; height: 220px; }
+      .card-thumbs { display: none; }
+      .topbar { display: none; }
+      .search-bar-inner { flex-direction: column; gap: 4px; }
+      .filter-bar { gap: 6px; }
+      .sort-wrap { margin-left: 0; width: 100%; }
+      .footer-top { grid-template-columns: 1fr; gap: 20px; }
+      .sold-stats-bar { grid-template-columns: 1fr 1fr; gap: 12px 0; }
+      .sold-stat-item:nth-child(2) { border-right: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROTOTYPE LABEL -->
+  <div class="prototype-banner">
+    <strong>BlurpleLab Prototype</strong> — Static UI recreation of Dwelly listings page for research purposes.
+  </div>
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a href="#">Sign In</a>
+      <div class="topbar-divider"></div>
+      <a href="#">Register</a>
+      <div class="topbar-divider"></div>
+      <a href="#">Advertise</a>
+      <div class="topbar-divider"></div>
+      <a href="#">Help</a>
+    </div>
+  </div>
+
+  <!-- MAIN NAV -->
+  <nav class="nav-main">
+    <div class="nav-inner">
+      <div class="nav-logo">
+        <div class="logo-text">
+          <span class="p24">Dwelly</span>
+        </div>
+      </div>
+      <ul class="nav-links">
+        <li><a href="#" class="active">Buy</a></li>
+        <li><a href="#">Rent</a></li>
+        <li><a href="#">Sell</a></li>
+        <li><a href="#">Commercial</a></li>
+        <li><a href="#">New Developments</a></li>
+        <li><a href="#">Advice</a></li>
+        <li><a href="#">Calculators</a></li>
+      </ul>
+      <div class="nav-right">
+        <button class="nav-btn nav-btn-outline">Save Search</button>
+        <button class="nav-btn nav-btn-primary">List Property</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- SEARCH BAR -->
+  <div class="search-bar">
+    <div class="search-bar-inner">
+      <div class="search-tabs">
+        <button class="search-tab active">Buy</button>
+        <button class="search-tab">Rent</button>
+        <button class="search-tab">Commercial</button>
+      </div>
+      <div class="search-input-wrap">
+        <span class="search-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+            <circle cx="6.5" cy="6.5" r="5" stroke="#888" stroke-width="1.5"/>
+            <path d="M10.5 10.5L14 14" stroke="#888" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <input class="search-input" type="text" value="Cape Town City Centre, Cape Town" placeholder="Area, suburb or address" />
+        <button class="search-submit">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="#">Home</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="#">Western Cape</a>
+      <span class="breadcrumb-sep">›</span>
+      <a href="#">Cape Town</a>
+      <span class="breadcrumb-sep">›</span>
+      <span class="breadcrumb-current">Cape Town City Centre</span>
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <div class="page-wrap">
+
+    <!-- LISTINGS COLUMN -->
+    <div class="listings-col">
+
+      <!-- Header -->
+      <div class="listings-header">
+        <h1 class="listings-title">Property For Sale in Cape Town City Centre</h1>
+        <p class="listings-count"><strong>247 properties</strong> for sale in Cape Town City Centre, Cape Town, Western Cape</p>
+      </div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <span class="filter-label">Filters:</span>
+        <button class="filter-chip active">For Sale <span class="filter-chip-x">×</span></button>
+        <button class="filter-chip">Any Price</button>
+        <button class="filter-chip">Any Beds</button>
+        <button class="filter-chip">Apartment</button>
+        <button class="filter-chip">Any Size</button>
+        <div class="filter-sep"></div>
+        <div class="sort-wrap">
+          <span class="sort-label">Sort by:</span>
+          <select class="sort-select">
+            <option>Most Recent</option>
+            <option>Price (Low to High)</option>
+            <option>Price (High to Low)</option>
+            <option>Property Type</option>
+            <option>Size</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Listings -->
+      <div class="listings-grid">
+
+        <!-- CARD 1 -->
+        <div class="listing-card">
+          <div class="card-inner">
+            <div class="card-image-wrap">
+              <img class="card-image"
+                src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=680&auto=format&fit=crop"
+                alt="2 Bedroom Apartment" />
+              <div class="img-badges">
+                <span class="img-badge badge-transfer">No Transfer Duty</span>
+                <span class="img-badge badge-onshow">On Show</span>
+              </div>
+              <div class="photo-count">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><rect x="0" y="2" width="12" height="8" rx="1" fill-opacity="0.9"/><circle cx="6" cy="6" r="2" fill="#333"/><rect x="4" y="0" width="4" height="2" rx="0.5"/></svg>
+                18
+              </div>
+              <div class="card-thumbs">
+                <img class="thumb" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=200&auto=format&fit=crop" alt="" />
+              </div>
+            </div>
+            <div class="card-details">
+              <span class="card-type-badge">Apartment · For Sale</span>
+              <div class="card-price">R 2 795 000</div>
+              <div class="card-price-sub">Levy: R 3 200/month</div>
+              <div class="card-title">Modern 2-Bed in The Rockwell — Stunning Mountain Views</div>
+              <div class="card-address">
+                <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 3.85 5.5 7.5 5.5 7.5S11 9.35 11 5.5C11 2.46 8.54 0 5.5 0zm0 7.5a2 2 0 110-4 2 2 0 010 4z" fill="#AAAAAA"/></svg>
+                De Waterkant, Cape Town City Centre, Cape Town
+              </div>
+              <div class="card-features">
+                <div class="feature">
+                  <svg class="feature-icon" width="16" height="14" viewBox="0 0 16 14" fill="none"><rect x="1" y="6" width="14" height="7" rx="1" stroke="#888" stroke-width="1.3"/><path d="M1 9h14" stroke="#888" stroke-width="1.3"/><path d="M5 6V3.5C5 2.67 5.67 2 6.5 2h3C10.33 2 11 2.67 11 3.5V6" stroke="#888" stroke-width="1.3"/></svg>
+                  2 Beds
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8h11M2 8V4a1 1 0 011-1h1.5M2 8v3a1 1 0 001 1h9a1 1 0 001-1V8M13 8V6a2 2 0 00-2-2H5" stroke="#888" stroke-width="1.3" stroke-linecap="round"/></svg>
+                  2 Baths
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="1" y="4" width="14" height="7" rx="1" stroke="#888" stroke-width="1.3"/><path d="M4 4V3a2 2 0 012-2h4a2 2 0 012 2v1" stroke="#888" stroke-width="1.3"/><circle cx="5.5" cy="7.5" r="0.8" fill="#888"/><circle cx="10.5" cy="7.5" r="0.8" fill="#888"/></svg>
+                  1 Parking
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="1" stroke="#888" stroke-width="1.3"/><path d="M5 1v12M1 5h12" stroke="#888" stroke-width="1.3"/></svg>
+                  98 m²
+                </div>
+              </div>
+              <p class="card-desc">Beautifully appointed 2-bedroom apartment with open-plan kitchen, wrap-around balcony, and spectacular views of Signal Hill. Walking distance to the V&A Waterfront.</p>
+              <div class="card-agent">
+                <div class="agent-info">
+                  <div class="agent-avatar">
+                    <img src="https://i.pravatar.cc/64?img=11" alt="" width="32" height="32" style="border-radius:50%;" />
+                  </div>
+                  <div>
+                    <div class="agent-name">Sarah van der Merwe</div>
+                    <div class="agent-agency">Pam Golding Properties</div>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn action-btn-outline">Save</button>
+                  <button class="action-btn action-btn-primary">Contact</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="listing-card">
+          <div class="card-inner">
+            <div class="card-image-wrap">
+              <img class="card-image"
+                src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=680&auto=format&fit=crop"
+                alt="Studio Apartment" />
+              <div class="img-badges">
+                <span class="img-badge badge-new">New</span>
+              </div>
+              <div class="photo-count">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><rect x="0" y="2" width="12" height="8" rx="1" fill-opacity="0.9"/><circle cx="6" cy="6" r="2" fill="#333"/><rect x="4" y="0" width="4" height="2" rx="0.5"/></svg>
+                9
+              </div>
+              <div class="card-thumbs">
+                <img class="thumb" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=200&auto=format&fit=crop" alt="" />
+              </div>
+            </div>
+            <div class="card-details">
+              <span class="card-type-badge">Studio · For Sale</span>
+              <div class="card-price">R 1 195 000</div>
+              <div class="card-price-sub">No transfer duty</div>
+              <div class="card-title">City Bowl Studio — High Floor, City Lights Views</div>
+              <div class="card-address">
+                <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 3.85 5.5 7.5 5.5 7.5S11 9.35 11 5.5C11 2.46 8.54 0 5.5 0zm0 7.5a2 2 0 110-4 2 2 0 010 4z" fill="#AAAAAA"/></svg>
+                Cape Town City Centre, Cape Town
+              </div>
+              <div class="card-features">
+                <div class="feature">
+                  <svg class="feature-icon" width="16" height="14" viewBox="0 0 16 14" fill="none"><rect x="1" y="6" width="14" height="7" rx="1" stroke="#888" stroke-width="1.3"/><path d="M1 9h14" stroke="#888" stroke-width="1.3"/><path d="M5 6V3.5C5 2.67 5.67 2 6.5 2h3C10.33 2 11 2.67 11 3.5V6" stroke="#888" stroke-width="1.3"/></svg>
+                  Studio
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8h11M2 8V4a1 1 0 011-1h1.5M2 8v3a1 1 0 001 1h9a1 1 0 001-1V8M13 8V6a2 2 0 00-2-2H5" stroke="#888" stroke-width="1.3" stroke-linecap="round"/></svg>
+                  1 Bath
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="1" stroke="#888" stroke-width="1.3"/><path d="M5 1v12M1 5h12" stroke="#888" stroke-width="1.3"/></svg>
+                  42 m²
+                </div>
+              </div>
+              <p class="card-desc">Compact and stylish studio on the 18th floor of The Capital. Perfect for young professionals or investors. On-site gym, pool, and 24-hour concierge.</p>
+              <div class="card-agent">
+                <div class="agent-info">
+                  <div class="agent-avatar">
+                    <img src="https://i.pravatar.cc/64?img=32" alt="" width="32" height="32" style="border-radius:50%;" />
+                  </div>
+                  <div>
+                    <div class="agent-name">James Mthembu</div>
+                    <div class="agent-agency">Chas Everitt City Apartments</div>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn action-btn-outline">Save</button>
+                  <button class="action-btn action-btn-primary">Contact</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 3 -->
+        <div class="listing-card">
+          <div class="card-inner">
+            <div class="card-image-wrap">
+              <img class="card-image"
+                src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=680&auto=format&fit=crop"
+                alt="3 Bedroom Penthouse" />
+              <div class="img-badges">
+                <span class="img-badge badge-transfer">No Transfer Duty</span>
+              </div>
+              <div class="photo-count">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><rect x="0" y="2" width="12" height="8" rx="1" fill-opacity="0.9"/><circle cx="6" cy="6" r="2" fill="#333"/><rect x="4" y="0" width="4" height="2" rx="0.5"/></svg>
+                24
+              </div>
+              <div class="card-thumbs">
+                <img class="thumb" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=200&auto=format&fit=crop" alt="" />
+              </div>
+            </div>
+            <div class="card-details">
+              <span class="card-type-badge">Penthouse · For Sale</span>
+              <div class="card-price">R 7 500 000</div>
+              <div class="card-price-sub">Levy: R 6 800/month</div>
+              <div class="card-title">Exceptional Penthouse — 360° Views, Private Rooftop Deck</div>
+              <div class="card-address">
+                <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 3.85 5.5 7.5 5.5 7.5S11 9.35 11 5.5C11 2.46 8.54 0 5.5 0zm0 7.5a2 2 0 110-4 2 2 0 010 4z" fill="#AAAAAA"/></svg>
+                Foreshore, Cape Town City Centre, Cape Town
+              </div>
+              <div class="card-features">
+                <div class="feature">
+                  <svg class="feature-icon" width="16" height="14" viewBox="0 0 16 14" fill="none"><rect x="1" y="6" width="14" height="7" rx="1" stroke="#888" stroke-width="1.3"/><path d="M1 9h14" stroke="#888" stroke-width="1.3"/><path d="M5 6V3.5C5 2.67 5.67 2 6.5 2h3C10.33 2 11 2.67 11 3.5V6" stroke="#888" stroke-width="1.3"/></svg>
+                  3 Beds
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8h11M2 8V4a1 1 0 011-1h1.5M2 8v3a1 1 0 001 1h9a1 1 0 001-1V8M13 8V6a2 2 0 00-2-2H5" stroke="#888" stroke-width="1.3" stroke-linecap="round"/></svg>
+                  3 Baths
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="1" y="4" width="14" height="7" rx="1" stroke="#888" stroke-width="1.3"/><path d="M4 4V3a2 2 0 012-2h4a2 2 0 012 2v1" stroke="#888" stroke-width="1.3"/><circle cx="5.5" cy="7.5" r="0.8" fill="#888"/><circle cx="10.5" cy="7.5" r="0.8" fill="#888"/></svg>
+                  2 Parking
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="1" stroke="#888" stroke-width="1.3"/><path d="M5 1v12M1 5h12" stroke="#888" stroke-width="1.3"/></svg>
+                  210 m²
+                </div>
+              </div>
+              <p class="card-desc">Rare double-storey penthouse with private rooftop terrace, chef's kitchen, and floor-to-ceiling glass showcasing panoramic sea and mountain views over the City Bowl.</p>
+              <div class="card-agent">
+                <div class="agent-info">
+                  <div class="agent-avatar">
+                    <img src="https://i.pravatar.cc/64?img=5" alt="" width="32" height="32" style="border-radius:50%;" />
+                  </div>
+                  <div>
+                    <div class="agent-name">Liezel du Plessis</div>
+                    <div class="agent-agency">Lew Geffen Sotheby's</div>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn action-btn-outline">Save</button>
+                  <button class="action-btn action-btn-primary">Contact</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 4 -->
+        <div class="listing-card">
+          <div class="card-inner">
+            <div class="card-image-wrap">
+              <img class="card-image"
+                src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=680&auto=format&fit=crop"
+                alt="1 Bedroom Apartment" />
+              <div class="img-badges">
+                <span class="img-badge badge-reduced">Reduced</span>
+              </div>
+              <div class="photo-count">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><rect x="0" y="2" width="12" height="8" rx="1" fill-opacity="0.9"/><circle cx="6" cy="6" r="2" fill="#333"/><rect x="4" y="0" width="4" height="2" rx="0.5"/></svg>
+                12
+              </div>
+              <div class="card-thumbs">
+                <img class="thumb" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=200&auto=format&fit=crop" alt="" />
+              </div>
+            </div>
+            <div class="card-details">
+              <span class="card-type-badge">Apartment · For Sale</span>
+              <div class="card-price">R 1 650 000</div>
+              <div class="card-price-sub"><s style="color:#ccc">R 1 850 000</s> &nbsp;Price reduced</div>
+              <div class="card-title">1-Bed Apartment in Heritage Square — Character & Charm</div>
+              <div class="card-address">
+                <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 3.85 5.5 7.5 5.5 7.5S11 9.35 11 5.5C11 2.46 8.54 0 5.5 0zm0 7.5a2 2 0 110-4 2 2 0 010 4z" fill="#AAAAAA"/></svg>
+                Bree Street, Cape Town City Centre, Cape Town
+              </div>
+              <div class="card-features">
+                <div class="feature">
+                  <svg class="feature-icon" width="16" height="14" viewBox="0 0 16 14" fill="none"><rect x="1" y="6" width="14" height="7" rx="1" stroke="#888" stroke-width="1.3"/><path d="M1 9h14" stroke="#888" stroke-width="1.3"/><path d="M5 6V3.5C5 2.67 5.67 2 6.5 2h3C10.33 2 11 2.67 11 3.5V6" stroke="#888" stroke-width="1.3"/></svg>
+                  1 Bed
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8h11M2 8V4a1 1 0 011-1h1.5M2 8v3a1 1 0 001 1h9a1 1 0 001-1V8M13 8V6a2 2 0 00-2-2H5" stroke="#888" stroke-width="1.3" stroke-linecap="round"/></svg>
+                  1 Bath
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="1" stroke="#888" stroke-width="1.3"/><path d="M5 1v12M1 5h12" stroke="#888" stroke-width="1.3"/></svg>
+                  65 m²
+                </div>
+              </div>
+              <p class="card-desc">Characterful apartment in a converted Victorian building on Bree Street. Exposed brick, high ceilings, and steps from the best restaurants and galleries in Cape Town.</p>
+              <div class="card-agent">
+                <div class="agent-info">
+                  <div class="agent-avatar">
+                    <img src="https://i.pravatar.cc/64?img=20" alt="" width="32" height="32" style="border-radius:50%;" />
+                  </div>
+                  <div>
+                    <div class="agent-name">Thandi Khumalo</div>
+                    <div class="agent-agency">RE/MAX Living</div>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn action-btn-outline">Save</button>
+                  <button class="action-btn action-btn-primary">Contact</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CARD 5 -->
+        <div class="listing-card">
+          <div class="card-inner">
+            <div class="card-image-wrap">
+              <img class="card-image"
+                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=680&auto=format&fit=crop"
+                alt="2 Bedroom Apartment" />
+              <div class="img-badges">
+                <span class="img-badge badge-underoffer">Under Offer</span>
+              </div>
+              <div class="photo-count">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><rect x="0" y="2" width="12" height="8" rx="1" fill-opacity="0.9"/><circle cx="6" cy="6" r="2" fill="#333"/><rect x="4" y="0" width="4" height="2" rx="0.5"/></svg>
+                15
+              </div>
+              <div class="card-thumbs">
+                <img class="thumb" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=200&auto=format&fit=crop" alt="" />
+              </div>
+            </div>
+            <div class="card-details">
+              <span class="card-type-badge">Apartment · For Sale</span>
+              <div class="card-price">R 3 200 000</div>
+              <div class="card-price-sub">Rates: R 1 450/month</div>
+              <div class="card-title">Luxury 2-Bed at Infinity Towers — Harbour & Ocean Views</div>
+              <div class="card-address">
+                <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 3.85 5.5 7.5 5.5 7.5S11 9.35 11 5.5C11 2.46 8.54 0 5.5 0zm0 7.5a2 2 0 110-4 2 2 0 010 4z" fill="#AAAAAA"/></svg>
+                Foreshore, Cape Town City Centre, Cape Town
+              </div>
+              <div class="card-features">
+                <div class="feature">
+                  <svg class="feature-icon" width="16" height="14" viewBox="0 0 16 14" fill="none"><rect x="1" y="6" width="14" height="7" rx="1" stroke="#888" stroke-width="1.3"/><path d="M1 9h14" stroke="#888" stroke-width="1.3"/><path d="M5 6V3.5C5 2.67 5.67 2 6.5 2h3C10.33 2 11 2.67 11 3.5V6" stroke="#888" stroke-width="1.3"/></svg>
+                  2 Beds
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8h11M2 8V4a1 1 0 011-1h1.5M2 8v3a1 1 0 001 1h9a1 1 0 001-1V8M13 8V6a2 2 0 00-2-2H5" stroke="#888" stroke-width="1.3" stroke-linecap="round"/></svg>
+                  2 Baths
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="1" y="4" width="14" height="7" rx="1" stroke="#888" stroke-width="1.3"/><path d="M4 4V3a2 2 0 012-2h4a2 2 0 012 2v1" stroke="#888" stroke-width="1.3"/><circle cx="5.5" cy="7.5" r="0.8" fill="#888"/><circle cx="10.5" cy="7.5" r="0.8" fill="#888"/></svg>
+                  2 Parking
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="1" stroke="#888" stroke-width="1.3"/><path d="M5 1v12M1 5h12" stroke="#888" stroke-width="1.3"/></svg>
+                  112 m²
+                </div>
+              </div>
+              <p class="card-desc">High-spec finishes, integrated Smeg appliances, and a private balcony overlooking the harbour. Building has a rooftop pool, concierge, and secure basement parking.</p>
+              <div class="card-agent">
+                <div class="agent-info">
+                  <div class="agent-avatar">
+                    <img src="https://i.pravatar.cc/64?img=47" alt="" width="32" height="32" style="border-radius:50%;" />
+                  </div>
+                  <div>
+                    <div class="agent-name">Marco de Villiers</div>
+                    <div class="agent-agency">Seeff Atlantic Seaboard</div>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn action-btn-outline">Save</button>
+                  <button class="action-btn action-btn-primary">Contact</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOLD BY US BLOCK -->
+        <div class="sold-block">
+
+          <!-- Agency header -->
+          <div class="sold-block-header">
+            <div class="sold-agency-brand">
+              <div class="sold-agency-logo">PG</div>
+              <div>
+                <div class="sold-agency-name">Pam Golding Properties</div>
+                <div class="sold-agency-sub">Cape Town City Centre Office</div>
+              </div>
+            </div>
+            <span class="sold-badge">
+              <span class="sold-badge-dot"></span>
+              Sold by Us
+            </span>
+          </div>
+
+          <!-- Stats bar -->
+          <div class="sold-stats-bar">
+            <div class="sold-stat-item">
+              <div class="sold-stat-num">47</div>
+              <div class="sold-stat-label">Sales this year</div>
+            </div>
+            <div class="sold-stat-item">
+              <div class="sold-stat-num">18</div>
+              <div class="sold-stat-label">Avg days to sell</div>
+            </div>
+            <div class="sold-stat-item">
+              <div class="sold-stat-num"><span class="gold">98</span>%</div>
+              <div class="sold-stat-label">Of asking price</div>
+            </div>
+            <div class="sold-stat-item">
+              <div class="sold-stat-num">12yr</div>
+              <div class="sold-stat-label">In this suburb</div>
+            </div>
+          </div>
+
+          <!-- Horizontal scroll row -->
+          <div class="sold-scroll-wrap">
+            <div class="sold-cards-row">
+
+              <div class="sold-prop-card">
+                <div class="sold-img-wrap">
+                  <img class="sold-img" src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&auto=format&fit=crop" alt="" />
+                  <div class="sold-overlay"></div>
+                  <span class="sold-stamp">Sold</span>
+                  <span class="sold-days-badge">3 days ago</span>
+                </div>
+                <div class="sold-card-body">
+                  <div class="sold-price">R 2 650 000</div>
+                  <div class="sold-address">2-Bed Apartment, The Rockwell, De Waterkant</div>
+                  <div class="sold-agent-row">
+                    <img class="sold-agent-avatar" src="https://i.pravatar.cc/44?img=11" alt="" />
+                    <span class="sold-agent-name">Sarah van der Berg</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sold-prop-card">
+                <div class="sold-img-wrap">
+                  <img class="sold-img" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&auto=format&fit=crop" alt="" />
+                  <div class="sold-overlay"></div>
+                  <span class="sold-stamp">Sold</span>
+                  <span class="sold-days-badge">1 week ago</span>
+                </div>
+                <div class="sold-card-body">
+                  <div class="sold-price">R 1 150 000</div>
+                  <div class="sold-address">Studio, The Capital, Cape Town City Centre</div>
+                  <div class="sold-agent-row">
+                    <img class="sold-agent-avatar" src="https://i.pravatar.cc/44?img=32" alt="" />
+                    <span class="sold-agent-name">James Mthembu</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sold-prop-card">
+                <div class="sold-img-wrap">
+                  <img class="sold-img" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&auto=format&fit=crop" alt="" />
+                  <div class="sold-overlay"></div>
+                  <span class="sold-stamp">Sold</span>
+                  <span class="sold-days-badge">2 weeks ago</span>
+                </div>
+                <div class="sold-card-body">
+                  <div class="sold-price">R 7 200 000</div>
+                  <div class="sold-address">3-Bed Penthouse, Foreshore, Cape Town</div>
+                  <div class="sold-agent-row">
+                    <img class="sold-agent-avatar" src="https://i.pravatar.cc/44?img=11" alt="" />
+                    <span class="sold-agent-name">Sarah van der Berg</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sold-prop-card">
+                <div class="sold-img-wrap">
+                  <img class="sold-img" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=400&auto=format&fit=crop" alt="" />
+                  <div class="sold-overlay"></div>
+                  <span class="sold-stamp">Sold</span>
+                  <span class="sold-days-badge">3 weeks ago</span>
+                </div>
+                <div class="sold-card-body">
+                  <div class="sold-price">R 1 580 000</div>
+                  <div class="sold-address">1-Bed, Heritage Square, Bree Street</div>
+                  <div class="sold-agent-row">
+                    <img class="sold-agent-avatar" src="https://i.pravatar.cc/44?img=20" alt="" />
+                    <span class="sold-agent-name">Thandi Khumalo</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sold-prop-card">
+                <div class="sold-img-wrap">
+                  <img class="sold-img" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&auto=format&fit=crop" alt="" />
+                  <div class="sold-overlay"></div>
+                  <span class="sold-stamp">Sold</span>
+                  <span class="sold-days-badge">Last month</span>
+                </div>
+                <div class="sold-card-body">
+                  <div class="sold-price">R 3 100 000</div>
+                  <div class="sold-address">2-Bed, Infinity Towers, Foreshore</div>
+                  <div class="sold-agent-row">
+                    <img class="sold-agent-avatar" src="https://i.pravatar.cc/44?img=47" alt="" />
+                    <span class="sold-agent-name">Marco de Villiers</span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Footer CTA -->
+          <div class="sold-footer">
+            <span class="sold-footer-text">
+              Pam Golding Properties has sold <strong>47 properties</strong> in Cape Town City Centre this year
+            </span>
+            <div class="sold-footer-actions">
+              <button class="sold-cta-outline">Contact Agency</button>
+              <button class="sold-cta-primary">View All Listings</button>
+            </div>
+          </div>
+
+        </div><!-- /sold-block -->
+
+        <!-- CARD 6 -->
+        <div class="listing-card">
+          <div class="card-inner">
+            <div class="card-image-wrap">
+              <img class="card-image"
+                src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=680&auto=format&fit=crop"
+                alt="Commercial Loft" />
+              <div class="img-badges">
+                <span class="img-badge badge-onshow">On Show Sun 2–4pm</span>
+              </div>
+              <div class="photo-count">
+                <svg width="12" height="10" viewBox="0 0 12 10" fill="white"><rect x="0" y="2" width="12" height="8" rx="1" fill-opacity="0.9"/><circle cx="6" cy="6" r="2" fill="#333"/><rect x="4" y="0" width="4" height="2" rx="0.5"/></svg>
+                8
+              </div>
+              <div class="card-thumbs">
+                <img class="thumb" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=200&auto=format&fit=crop" alt="" />
+                <img class="thumb" src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=200&auto=format&fit=crop" alt="" />
+              </div>
+            </div>
+            <div class="card-details">
+              <span class="card-type-badge">Loft · For Sale</span>
+              <div class="card-price">R 2 100 000</div>
+              <div class="card-price-sub">Levy: R 2 800/month</div>
+              <div class="card-title">Industrial Loft — Old Biscuit Mill District, Converted Factory</div>
+              <div class="card-address">
+                <svg width="11" height="13" viewBox="0 0 11 13" fill="none"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 3.85 5.5 7.5 5.5 7.5S11 9.35 11 5.5C11 2.46 8.54 0 5.5 0zm0 7.5a2 2 0 110-4 2 2 0 010 4z" fill="#AAAAAA"/></svg>
+                Woodstock, Cape Town City Centre, Cape Town
+              </div>
+              <div class="card-features">
+                <div class="feature">
+                  <svg class="feature-icon" width="16" height="14" viewBox="0 0 16 14" fill="none"><rect x="1" y="6" width="14" height="7" rx="1" stroke="#888" stroke-width="1.3"/><path d="M1 9h14" stroke="#888" stroke-width="1.3"/><path d="M5 6V3.5C5 2.67 5.67 2 6.5 2h3C10.33 2 11 2.67 11 3.5V6" stroke="#888" stroke-width="1.3"/></svg>
+                  1 Bed
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="15" height="14" viewBox="0 0 15 14" fill="none"><path d="M2 8h11M2 8V4a1 1 0 011-1h1.5M2 8v3a1 1 0 001 1h9a1 1 0 001-1V8M13 8V6a2 2 0 00-2-2H5" stroke="#888" stroke-width="1.3" stroke-linecap="round"/></svg>
+                  1 Bath
+                </div>
+                <div class="feature-sep"></div>
+                <div class="feature">
+                  <svg class="feature-icon" width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="1" y="1" width="12" height="12" rx="1" stroke="#888" stroke-width="1.3"/><path d="M5 1v12M1 5h12" stroke="#888" stroke-width="1.3"/></svg>
+                  88 m²
+                </div>
+              </div>
+              <p class="card-desc">Spectacular converted factory loft with 5m ceilings, original steel beams, and polished concrete floors. Double-volume living and a mezzanine sleeping area.</p>
+              <div class="card-agent">
+                <div class="agent-info">
+                  <div class="agent-avatar">
+                    <img src="https://i.pravatar.cc/64?img=28" alt="" width="32" height="32" style="border-radius:50%;" />
+                  </div>
+                  <div>
+                    <div class="agent-name">Nadia Patel</div>
+                    <div class="agent-agency">Harcourts Western Cape</div>
+                  </div>
+                </div>
+                <div class="card-actions">
+                  <button class="action-btn action-btn-outline">Save</button>
+                  <button class="action-btn action-btn-primary">Contact</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /listings-grid -->
+
+      <!-- PAGINATION -->
+      <div class="pagination">
+        <button class="page-btn page-btn-wide">← Prev</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn">4</button>
+        <button class="page-btn">5</button>
+        <span style="color:#ccc;padding:0 4px;">...</span>
+        <button class="page-btn">23</button>
+        <button class="page-btn page-btn-wide">Next →</button>
+      </div>
+
+    </div><!-- /listings-col -->
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <!-- Map card -->
+      <div class="map-card">
+        <div class="map-placeholder">
+          <div class="map-pin">
+            <svg width="32" height="40" viewBox="0 0 32 40" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 2px 5px rgba(0,0,0,0.25))">
+              <path d="M16 0C9.373 0 4 5.373 4 12c0 9 12 28 12 28S28 21 28 12C28 5.373 22.627 0 16 0z" fill="#E8001A"/>
+              <circle cx="16" cy="12" r="5" fill="white"/>
+            </svg>
+          </div>
+          <span class="map-suburb-label">Cape Town City Centre</span>
+        </div>
+        <div class="map-footer">
+          <span class="map-footer-label">247 properties in area</span>
+          <a href="#" class="map-view-link">
+            View full map
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5h6M5 2l3 3-3 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <!-- Suburb Expert -->
+      <div class="expert-card">
+
+        <!-- Header -->
+        <div class="expert-heading">
+          <div class="expert-badge">
+            <div class="expert-badge-icon">
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none">
+                <path d="M5.5 1L6.8 3.9l3.2.4-2.3 2.2.5 3.1L5.5 8 2.8 9.6l.5-3.1L1 4.3l3.2-.4L5.5 1z" fill="#FFD700"/>
+              </svg>
+            </div>
+            <span class="expert-badge-text">Suburb Expert</span>
+          </div>
+          <span class="expert-sponsored">Sponsored</span>
+        </div>
+
+        <!-- Video reel -->
+        <div class="expert-reel" onclick="openReelModal()">
+          <button class="reel-play-btn" aria-label="Play suburb intro reel">
+            <svg width="14" height="16" viewBox="0 0 14 16" fill="none">
+              <path d="M1.5 1.5l11 6.5-11 6.5V1.5z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <span class="reel-label">Watch suburb intro reel</span>
+          <div class="reel-footer">
+            <div class="reel-dots">
+              <div class="reel-dot active"></div>
+              <div class="reel-dot"></div>
+              <div class="reel-dot"></div>
+              <div class="reel-dot"></div>
+            </div>
+            <span class="reel-duration">2:34</span>
+          </div>
+        </div>
+
+        <!-- Agent info -->
+        <div class="expert-body">
+          <div class="expert-agent">
+            <div class="expert-avatar">SvB</div>
+            <div>
+              <div class="expert-agent-name">Sarah van der Berg</div>
+              <div class="expert-agency">Pam Golding Properties</div>
+              <span class="expert-specialist-pill">City Centre Specialist</span>
+            </div>
+          </div>
+
+          <!-- Stats 2×2 -->
+          <div class="expert-stats">
+            <div class="expert-stat">
+              <div class="stat-value">47</div>
+              <div class="stat-label">Sales this year</div>
+            </div>
+            <div class="expert-stat">
+              <div class="stat-value">18</div>
+              <div class="stat-label">Avg days to sell</div>
+            </div>
+            <div class="expert-stat">
+              <div class="stat-value">98%</div>
+              <div class="stat-label">Ask price achieved</div>
+            </div>
+            <div class="expert-stat">
+              <div class="stat-value">12yr</div>
+              <div class="stat-label">In this suburb</div>
+            </div>
+          </div>
+
+          <!-- Star rating -->
+          <div class="expert-rating">
+            <div class="stars">
+              <span class="star">★</span>
+              <span class="star">★</span>
+              <span class="star">★</span>
+              <span class="star">★</span>
+              <span class="star" style="background: linear-gradient(90deg, #F59E0B 50%, #DDD 50%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">★</span>
+            </div>
+            <span class="rating-score">4.9</span>
+            <span class="rating-count">· 63 reviews</span>
+          </div>
+
+          <!-- Buttons -->
+          <button class="expert-btn-primary">Contact Sarah</button>
+          <button class="expert-btn-outline">View her listings (12)</button>
+
+          <a href="#" class="expert-see-all">See all suburb experts →</a>
+        </div>
+      </div>
+
+    </aside>
+
+  </div><!-- /page-wrap -->
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="footer-logo-text"><span>Dwelly</span></div>
+        <ul>
+          <li><a href="#">About Dwelly</a></li>
+          <li><a href="#">Advertise with Us</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">Press & Media</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#">Property For Sale</a></li>
+          <li><a href="#">Property To Rent</a></li>
+          <li><a href="#">New Developments</a></li>
+          <li><a href="#">Commercial Property</a></li>
+          <li><a href="#">Property Valuations</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Tools</h4>
+        <ul>
+          <li><a href="#">Bond Calculator</a></li>
+          <li><a href="#">Transfer Costs</a></li>
+          <li><a href="#">Affordability Calculator</a></li>
+          <li><a href="#">Property Reports</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+          <li><a href="#">PAIA Manual</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Dwelly. All rights reserved. · This is a BlurpleLab prototype for research and UX study purposes only.
+    </div>
+  </footer>
+
+  <!-- REEL MODAL -->
+  <div class="reel-modal-overlay" id="reelModal" onclick="handleOverlayClick(event)">
+    <div class="reel-modal" id="reelModalInner">
+      <button class="reel-modal-close" onclick="closeReelModal()" aria-label="Close">&times;</button>
+      <div class="reel-modal-player">
+        <video
+          id="reelVideo"
+          src="https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"
+          controls
+          playsinline>
+        </video>
+      </div>
+      <span class="reel-modal-label">Cape Town City Centre &middot; Suburb Reel</span>
+    </div>
+  </div>
+
+  <script>
+    function openReelModal() {
+      const video = document.getElementById('reelVideo');
+      document.getElementById('reelModal').classList.add('open');
+      document.body.style.overflow = 'hidden';
+      video.play();
+    }
+
+    function closeReelModal() {
+      const video = document.getElementById('reelVideo');
+      document.getElementById('reelModal').classList.remove('open');
+      video.pause();
+      video.currentTime = 0;
+      document.body.style.overflow = '';
+    }
+
+    function handleOverlayClick(e) {
+      if (e.target === document.getElementById('reelModal')) {
+        closeReelModal();
+      }
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeReelModal();
+    });
+  </script>
+
+</body>
+</html>
