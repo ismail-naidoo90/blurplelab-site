@@ -440,7 +440,7 @@
 
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
       gap: 24px;
     }
 
@@ -738,10 +738,6 @@
         gap: 2px;
       }
 
-      .projects-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
       footer {
         justify-content: center;
         text-align: center;
@@ -929,6 +925,28 @@
               <span class="status-dot"></span> Ongoing
             </span>
             <a href="#" class="card-link">Explore →</a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="project-card">
+          <div class="card-top-bar"></div>
+          <div class="card-content">
+            <div class="card-icon-wrap">🖼️</div>
+            <span class="card-tag">AI · PropTech</span>
+            <h3 class="card-title">Room Visualiser Test</h3>
+            <p class="card-desc">An interactive comparison of AI room visualisation tools — ChatGPT vs Gemini. Upload a room photo and see how each model reimagines the renovation.</p>
+            <div class="card-chips">
+              <span class="chip">Generative AI</span>
+              <span class="chip">Image Models</span>
+              <span class="chip">PropTech</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <span class="card-status">
+              <span class="status-dot active"></span> Active
+            </span>
+            <a href="room-visualiser.html" target="_blank" rel="noopener" class="card-link">View Test →</a>
           </div>
         </div>
 
