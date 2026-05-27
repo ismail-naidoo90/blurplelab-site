@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domio — 12 Ocean View Drive, Sea Point</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dp:   #250b52;
+      --acc:  #a78bfa;
+      --acc2: #7c3aed;
+      --bg:   #f8f9fb;
+      --white:#ffffff;
+      --text: #0d1b2e;
+      --muted:#64748b;
+      --bdr:  #e2e8f0;
+      --green:#059669;
+      --font: 'Inter', system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0; z-index: 100;
+      background: var(--dp);
+      box-shadow: 0 1px 16px rgba(0,0,0,0.25);
+    }
+
+    .nav-inner {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em; }
+    .logo-dom { color: #ffffff; }
+    .logo-io  { color: var(--acc); }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: #ffffff; }
+
+    /* ── HERO IMAGE ── */
+    .hero-wrap {
+      position: relative;
+      height: 420px;
+      overflow: hidden;
+      background: #1a0740;
+    }
+
+    .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,5,30,0.88) 0%, rgba(13,5,30,0.25) 50%, transparent 100%);
+    }
+
+    .hero-content {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 0 40px 32px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .hero-left {}
+
+    .hero-address {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.04em;
+      margin-bottom: 6px;
+    }
+
+    .hero-title {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+
+    .hero-price {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-right { flex-shrink: 0; text-align: right; }
+
+    .match-badge-lg {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(37,11,82,0.75);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(167,139,250,0.3);
+      border-radius: 10px;
+      padding: 10px 16px;
+    }
+
+    .match-pct {
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--acc);
+      letter-spacing: -0.02em;
+    }
+
+    .match-label { font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.6); }
+
+    /* ── THUMBNAILS ── */
+    .thumbs {
+      display: flex;
+      gap: 8px;
+      padding: 10px 40px;
+      background: #130528;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .thumbs::-webkit-scrollbar { display: none; }
+
+    .thumb {
+      flex: 0 0 100px;
+      height: 64px;
+      border-radius: 6px;
+      object-fit: cover;
+      cursor: pointer;
+      opacity: 0.65;
+      border: 2px solid transparent;
+      transition: opacity 0.2s, border-color 0.2s;
+    }
+
+    .thumb:hover { opacity: 1; }
+    .thumb.active { opacity: 1; border-color: var(--acc); }
+
+    /* ── PAGE BODY ── */
+    .page-wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 36px 28px 80px;
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── LEFT COLUMN ── */
+    .detail-col {}
+
+    .section-block {
+      background: var(--white);
+      border: 1px solid var(--bdr);
+      border-radius: 14px;
+      padding: 28px;
+      margin-bottom: 20px;
+    }
+
+    .block-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    /* AI Summary */
+    .ai-summary {
+      background: #f5f0ff;
+      border: 1px solid rgba(124,58,237,0.15);
+      border-radius: 14px;
+      padding: 24px 28px;
+      margin-bottom: 20px;
+    }
+
+    .ai-summary-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .ai-icon {
+      width: 30px; height: 30px;
+      background: var(--acc2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .ai-summary-title { font-size: 0.85rem; font-weight: 700; color: var(--acc2); }
+    .ai-summary-text { font-size: 0.9rem; color: var(--text); line-height: 1.75; }
+
+    .ai-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+
+    .ai-tag-pill {
+      background: rgba(124,58,237,0.1);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 0.73rem;
+      font-weight: 600;
+      color: var(--acc2);
+    }
+
+    /* Specs grid */
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .spec-item {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 14px 16px;
+      text-align: center;
+    }
+
+    .spec-val {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--dp);
+      letter-spacing: -0.02em;
+      margin-bottom: 3px;
+    }
+
+    .spec-lbl { font-size: 0.73rem; color: var(--muted); font-weight: 500; }
+
+    /* Features list */
+    .features-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .feat-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.86rem;
+      color: var(--text);
+    }
+
+    .feat-check {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: rgba(5,150,105,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* Suburb intel */
+    .intel-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .intel-item {
+      background: var(--bg);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .intel-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--dp);
+      letter-spacing: -0.02em;
+      margin-bottom: 2px;
+    }
+
+    .intel-val.pos { color: var(--green); }
+
+    .intel-lbl { font-size: 0.73rem; color: var(--muted); font-weight: 500; }
+
+    /* Price history chart (CSS-only bars) */
+    .price-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      height: 120px;
+      padding-bottom: 8px;
+      border-bottom: 1.5px solid var(--bdr);
+      margin-bottom: 10px;
+    }
+
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .bar {
+      width: 100%;
+      border-radius: 4px 4px 0 0;
+      background: linear-gradient(180deg, var(--acc2), var(--dp));
+      transition: opacity 0.2s;
+    }
+
+    .bar:hover { opacity: 0.75; }
+
+    .bar-year { font-size: 0.66rem; color: var(--muted); font-weight: 500; }
+    .bar-price-label { font-size: 0.62rem; color: var(--muted); }
+
+    .chart-latest-label {
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-align: right;
+      margin-top: 2px;
+    }
+
+    .chart-latest-label strong { color: var(--dp); }
+
+    /* ── RIGHT SIDEBAR ── */
+    .sidebar-col { display: flex; flex-direction: column; gap: 20px; }
+
+    .sidebar-sticky { position: sticky; top: 72px; }
+
+    /* Bond calculator */
+    .calc-card {
+      background: var(--white);
+      border: 1px solid var(--bdr);
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .calc-title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 20px;
+    }
+
+    .calc-field { margin-bottom: 16px; }
+
+    .calc-field label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .calc-field label span { color: var(--dp); font-weight: 700; font-size: 0.8rem; text-transform: none; letter-spacing: 0; }
+
+    .calc-input {
+      width: 100%;
+      border: 1.5px solid var(--bdr);
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .calc-input:focus { outline: none; border-color: var(--dp); }
+
+    .calc-slider {
+      width: 100%;
+      accent-color: var(--dp);
+      margin-top: 4px;
+    }
+
+    .term-options {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+    }
+
+    .term-btn {
+      border: 1.5px solid var(--bdr);
+      border-radius: 7px;
+      padding: 7px 4px;
+      font-family: var(--font);
+      font-size: 0.77rem;
+      font-weight: 600;
+      color: var(--muted);
+      cursor: pointer;
+      background: none;
+      transition: all 0.18s;
+      text-align: center;
+    }
+
+    .term-btn:hover { border-color: var(--dp); color: var(--dp); }
+    .term-btn.on { background: var(--dp); border-color: var(--dp); color: #ffffff; }
+
+    .calc-result {
+      background: linear-gradient(135deg, var(--dp), #3b0f8a);
+      border-radius: 10px;
+      padding: 18px;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .result-lbl { font-size: 0.72rem; color: rgba(255,255,255,0.6); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .result-val { font-size: 1.65rem; font-weight: 800; color: #ffffff; letter-spacing: -0.03em; margin-bottom: 4px; }
+    .result-sub { font-size: 0.72rem; color: rgba(255,255,255,0.5); }
+
+    /* Agent card */
+    .agent-card {
+      background: var(--white);
+      border: 1px solid var(--bdr);
+      border-radius: 14px;
+      padding: 22px;
+    }
+
+    .agent-head {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .agent-avatar {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #250b52, #7c3aed);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #ffffff;
+      flex-shrink: 0;
+    }
+
+    .agent-name { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .agent-agency { font-size: 0.75rem; color: var(--muted); margin-bottom: 3px; }
+
+    .agent-rating {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .stars { color: #f59e0b; font-size: 0.8rem; }
+    .rating-count { color: var(--muted); font-weight: 400; }
+
+    .btn-contact {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: var(--dp);
+      color: #ffffff;
+      border: none;
+      border-radius: 9px;
+      padding: 12px;
+      font-family: var(--font);
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      margin-bottom: 8px;
+    }
+
+    .btn-contact:hover { opacity: 0.85; }
+
+    .btn-contact-ghost {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: transparent;
+      color: var(--dp);
+      border: 1.5px solid var(--bdr);
+      border-radius: 9px;
+      padding: 11px;
+      font-family: var(--font);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-contact-ghost:hover { border-color: var(--dp); }
+
+    /* Similar properties */
+    .similar-card {
+      background: var(--white);
+      border: 1px solid var(--bdr);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .similar-title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text);
+      padding: 16px 18px 12px;
+      border-bottom: 1px solid var(--bdr);
+    }
+
+    .sim-item {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--bdr);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .sim-item:last-child { border-bottom: none; }
+    .sim-item:hover { background: var(--bg); }
+
+    .sim-img {
+      width: 60px; height: 48px;
+      border-radius: 7px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .sim-body { flex: 1; min-width: 0; }
+    .sim-suburb { font-size: 0.68rem; font-weight: 700; color: var(--acc2); text-transform: uppercase; letter-spacing: 0.05em; }
+    .sim-price { font-size: 0.88rem; font-weight: 700; color: var(--text); }
+    .sim-match { font-size: 0.7rem; color: var(--muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dp);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .foot-logo { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; }
+    .foot-logo .logo-dom { color: #ffffff; }
+    .foot-logo .logo-io  { color: var(--acc); }
+    .foot-copy { font-size: 0.77rem; color: rgba(255,255,255,0.38); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .page-wrap { grid-template-columns: 1fr; }
+      .sidebar-sticky { position: static; }
+      .hero-wrap { height: 300px; }
+      .hero-content { padding: 0 20px 24px; }
+    }
+
+    @media (max-width: 640px) {
+      .specs-grid { grid-template-columns: repeat(3, 1fr); }
+      .intel-grid { grid-template-columns: 1fr 1fr; }
+      .features-list { grid-template-columns: 1fr; }
+      .page-wrap { padding: 20px 16px 48px; gap: 16px; }
+      .thumbs { padding: 8px 16px; }
+      .hero-content { flex-direction: column; align-items: flex-start; }
+      footer { padding: 20px 16px; justify-content: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="domio-home.html" class="logo">
+        <span class="logo-dom">dom</span><span class="logo-io">io</span>
+      </a>
+      <a href="domio-results.html" class="nav-back">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Back to results
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO IMAGE -->
+  <div class="hero-wrap">
+    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=1400&q=85" alt="Property hero" class="hero-img" />
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <div class="hero-address">12 Ocean View Drive &middot; Sea Point, Cape Town</div>
+        <div class="hero-title">Ocean-view penthouse<br />with private terrace</div>
+        <div class="hero-price">R4,850,000</div>
+      </div>
+      <div class="hero-right">
+        <div class="match-badge-lg">
+          <div>
+            <div class="match-pct">94%</div>
+            <div class="match-label">AI match</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THUMBNAILS -->
+  <div class="thumbs">
+    <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=220&q=75" class="thumb active" alt="Main" loading="lazy" />
+    <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=220&q=75" class="thumb" alt="Living room" loading="lazy" />
+    <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=220&q=75" class="thumb" alt="Kitchen" loading="lazy" />
+    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=220&q=75" class="thumb" alt="Bedroom" loading="lazy" />
+    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=220&q=75" class="thumb" alt="Terrace" loading="lazy" />
+  </div>
+
+  <!-- PAGE BODY -->
+  <div class="page-wrap">
+
+    <!-- LEFT: detail content -->
+    <div class="detail-col">
+
+      <!-- AI summary -->
+      <div class="ai-summary">
+        <div class="ai-summary-head">
+          <div class="ai-icon">
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M7.5 1.5l1.8 4L13 7.5l-3.7 2-1.8 4-1.8-4L2 7.5l3.7-2 1.8-4Z" fill="#ffffff"/></svg>
+          </div>
+          <div class="ai-summary-title">Domio AI summary &mdash; why this matches</div>
+        </div>
+        <p class="ai-summary-text">
+          This property hits your top criteria: a quiet residential street off the Main Road strip,
+          floor-to-ceiling windows on the north-facing side, and a 4-minute walk to the Sea Point
+          promenade. The building allows pets and has covered parking. At 148 m² with 3 bedrooms
+          it gives you room to work from home. The price per m² (R32,770/m²) is 12% below the
+          Sea Point median for this floor level.
+        </p>
+        <div class="ai-tags">
+          <span class="ai-tag-pill">Quiet street</span>
+          <span class="ai-tag-pill">Walk to promenade</span>
+          <span class="ai-tag-pill">Great natural light</span>
+          <span class="ai-tag-pill">Pet friendly</span>
+          <span class="ai-tag-pill">Work from home</span>
+        </div>
+      </div>
+
+      <!-- Specs -->
+      <div class="section-block">
+        <div class="block-title">Property details</div>
+        <div class="specs-grid">
+          <div class="spec-item">
+            <div class="spec-val">3</div>
+            <div class="spec-lbl">Bedrooms</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-val">2</div>
+            <div class="spec-lbl">Bathrooms</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-val">148 m²</div>
+            <div class="spec-lbl">Floor area</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-val">12th</div>
+            <div class="spec-lbl">Floor</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-val">2</div>
+            <div class="spec-lbl">Parking bays</div>
+          </div>
+          <div class="spec-item">
+            <div class="spec-val">2019</div>
+            <div class="spec-lbl">Year built</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="section-block">
+        <div class="block-title">Features &amp; finishes</div>
+        <div class="features-list">
+          <div class="feat-item">
+            <div class="feat-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Private terrace (22 m²)
+          </div>
+          <div class="feat-item">
+            <div class="feat-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Building pool &amp; gym
+          </div>
+          <div class="feat-item">
+            <div class="feat-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            24hr security &amp; concierge
+          </div>
+          <div class="feat-item">
+            <div class="feat-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Fibre-ready (1 Gbps)
+          </div>
+          <div class="feat-item">
+            <div class="feat-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            2x basement parking
+          </div>
+          <div class="feat-item">
+            <div class="feat-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Solar backup system
+          </div>
+          <div class="feat-item">
+            <div class="feat-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Pet friendly building
+          </div>
+          <div class="feat-item">
+            <div class="feat-check">
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 5l2.5 2.5L8 3" stroke="#059669" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            Aircon throughout
+          </div>
+        </div>
+      </div>
+
+      <!-- Suburb intel -->
+      <div class="section-block">
+        <div class="block-title">Sea Point — suburb intel</div>
+        <div class="intel-grid">
+          <div class="intel-item">
+            <div class="intel-val">R4.2M</div>
+            <div class="intel-lbl">Median sale price</div>
+          </div>
+          <div class="intel-item">
+            <div class="intel-val pos">+8.2%</div>
+            <div class="intel-lbl">Price growth YoY</div>
+          </div>
+          <div class="intel-item">
+            <div class="intel-val">92</div>
+            <div class="intel-lbl">Walk score / 100</div>
+          </div>
+          <div class="intel-item">
+            <div class="intel-val">45 days</div>
+            <div class="intel-lbl">Avg days on market</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Price history chart -->
+      <div class="section-block">
+        <div class="block-title">Price history</div>
+        <div class="price-chart">
+          <div class="bar-col">
+            <div class="bar" style="height:66%;" title="R3.2M"></div>
+            <div class="bar-year">2020</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar" style="height:72%;" title="R3.5M"></div>
+            <div class="bar-year">2021</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar" style="height:78%;" title="R3.8M"></div>
+            <div class="bar-year">2022</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar" style="height:85%;" title="R4.1M"></div>
+            <div class="bar-year">2023</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar" style="height:93%;" title="R4.5M"></div>
+            <div class="bar-year">2024</div>
+          </div>
+          <div class="bar-col">
+            <div class="bar" style="height:100%;" title="R4.85M"></div>
+            <div class="bar-year">2025</div>
+          </div>
+        </div>
+        <div class="chart-latest-label">Listed at <strong>R4,850,000</strong> &mdash; up 51.6% since 2020</div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: sidebar -->
+    <div class="sidebar-col">
+      <div class="sidebar-sticky">
+
+        <!-- Bond calculator -->
+        <div class="calc-card">
+          <div class="calc-title">Bond calculator</div>
+
+          <div class="calc-field">
+            <label>Purchase price <span id="lblPrice">R4,850,000</span></label>
+            <input type="text" class="calc-input" id="inpPrice" value="4850000" oninput="calcBond()" />
+          </div>
+
+          <div class="calc-field">
+            <label>Deposit <span id="lblDeposit">R970,000 (20%)</span></label>
+            <input type="range" class="calc-slider" id="inpDeposit" min="0" max="50" value="20" oninput="calcBond()" />
+          </div>
+
+          <div class="calc-field">
+            <label>Interest rate <span id="lblRate">11.75% p.a.</span></label>
+            <input type="range" class="calc-slider" id="inpRate" min="8" max="18" step="0.25" value="11.75" oninput="calcBond()" />
+          </div>
+
+          <div class="calc-field">
+            <label>Loan term</label>
+            <div class="term-options" id="termOptions">
+              <button class="term-btn" onclick="setTerm(10, this)">10 yr</button>
+              <button class="term-btn" onclick="setTerm(15, this)">15 yr</button>
+              <button class="term-btn on" onclick="setTerm(20, this)">20 yr</button>
+              <button class="term-btn" onclick="setTerm(25, this)">25 yr</button>
+            </div>
+          </div>
+
+          <div class="calc-result">
+            <div class="result-lbl">Monthly repayment</div>
+            <div class="result-val" id="resultVal">R39,240</div>
+            <div class="result-sub" id="resultSub">Loan: R3,880,000 over 20 years</div>
+          </div>
+        </div>
+
+        <!-- Agent card -->
+        <div class="agent-card">
+          <div class="agent-head">
+            <div class="agent-avatar">SV</div>
+            <div>
+              <div class="agent-name">Sarah van der Berg</div>
+              <div class="agent-agency">Pam Golding Properties</div>
+              <div class="agent-rating">
+                <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                4.9
+                <span class="rating-count">(47 reviews)</span>
+              </div>
+            </div>
+          </div>
+          <button class="btn-contact">Call Sarah</button>
+          <button class="btn-contact-ghost">Send a message</button>
+        </div>
+
+        <!-- Similar properties -->
+        <div class="similar-card">
+          <div class="similar-title">Similar properties</div>
+          <div class="sim-item" onclick="location.href='domio-detail.html'">
+            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=160&q=75" class="sim-img" alt="Similar" loading="lazy" />
+            <div class="sim-body">
+              <div class="sim-suburb">Sea Point</div>
+              <div class="sim-price">R3,200,000</div>
+              <div class="sim-match">89% match &middot; 2 bed / 1 bath</div>
+            </div>
+          </div>
+          <div class="sim-item" onclick="location.href='domio-detail.html'">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=160&q=75" class="sim-img" alt="Similar" loading="lazy" />
+            <div class="sim-body">
+              <div class="sim-suburb">Green Point</div>
+              <div class="sim-price">R4,100,000</div>
+              <div class="sim-match">87% match &middot; 3 bed / 2 bath</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="domio-home.html" class="foot-logo">
+      <span class="logo-dom">dom</span><span class="logo-io">io</span>
+    </a>
+    <span class="foot-copy">A BlurpleLab prototype &middot; Cape Town &middot; 2026</span>
+  </footer>
+
+  <script>
+    let termYears = 20;
+
+    // Thumbnail switcher
+    document.querySelectorAll('.thumb').forEach((t, i, all) => {
+      t.addEventListener('click', () => {
+        all.forEach(x => x.classList.remove('active'));
+        t.classList.add('active');
+      });
+    });
+
+    function setTerm(y, btn) {
+      termYears = y;
+      document.querySelectorAll('.term-btn').forEach(b => b.classList.remove('on'));
+      btn.classList.add('on');
+      calcBond();
+    }
+
+    function calcBond() {
+      const price  = parseFloat(document.getElementById('inpPrice').value.replace(/[^\d.]/g, '')) || 0;
+      const depPct = parseFloat(document.getElementById('inpDeposit').value) / 100;
+      const rate   = parseFloat(document.getElementById('inpRate').value) / 100;
+      const n      = termYears * 12;
+      const loan   = price * (1 - depPct);
+      const r      = rate / 12;
+
+      document.getElementById('lblPrice').textContent   = 'R' + Math.round(price).toLocaleString('en-ZA');
+      document.getElementById('lblDeposit').textContent = 'R' + Math.round(loan > 0 ? price - loan : 0).toLocaleString('en-ZA') + ' (' + Math.round(depPct * 100) + '%)';
+      document.getElementById('lblRate').textContent    = (rate * 100).toFixed(2) + '% p.a.';
+
+      let monthly = 0;
+      if (r > 0 && loan > 0) {
+        monthly = loan * r * Math.pow(1 + r, n) / (Math.pow(1 + r, n) - 1);
+      }
+
+      document.getElementById('resultVal').textContent = 'R' + Math.round(monthly).toLocaleString('en-ZA');
+      document.getElementById('resultSub').textContent = 'Loan: R' + Math.round(loan).toLocaleString('en-ZA') + ' over ' + termYears + ' years';
+    }
+
+    calcBond();
+  </script>
+</body>
+</html>

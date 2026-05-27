@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domio — Find your place in Cape Town</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dp:   #250b52;
+      --ds:   #3b0f8a;
+      --dd:   #1a0740;
+      --acc:  #a78bfa;
+      --acc2: #7c3aed;
+      --bg:   #f8f9fb;
+      --white:#ffffff;
+      --text: #0d1b2e;
+      --muted:#64748b;
+      --bdr:  #e2e8f0;
+      --font: 'Inter', system-ui, sans-serif;
+      --max-w:1100px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: transparent;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    nav.nav--solid {
+      background: var(--dp);
+      box-shadow: 0 1px 16px rgba(0,0,0,0.3);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.02em; }
+    .logo-dom { color: #ffffff; }
+    .logo-io  { color: var(--acc); }
+
+    .nav-links { display: flex; align-items: center; gap: 28px; list-style: none; }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.65);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: #ffffff; }
+
+    .nav-cta {
+      color: #ffffff !important;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 7px 18px;
+      border-radius: 6px;
+      transition: border-color 0.2s !important;
+    }
+
+    .nav-cta:hover { border-color: rgba(255,255,255,0.75) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(160deg, #250b52 0%, #3b0f8a 55%, #1a0740 100%);
+      padding: 140px 28px 96px;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-inner { max-width: 720px; margin: 0 auto; }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(167,139,250,0.15);
+      border: 1px solid rgba(167,139,250,0.3);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--acc);
+      letter-spacing: 0.04em;
+      margin-bottom: 28px;
+    }
+
+    .pill-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--acc);
+      animation: blink 2s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 6.5vw, 3.75rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.06;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--acc);
+    }
+
+    .hero-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 460px;
+      margin: 0 auto 48px;
+      line-height: 1.8;
+    }
+
+    /* ── ONBOARDING CARD ── */
+    .card-wrap { width: 100%; max-width: 560px; margin: 0 auto; }
+
+    .onboard-card {
+      background: var(--white);
+      border-radius: 16px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.4), 0 4px 16px rgba(0,0,0,0.15);
+    }
+
+    .card-progress {
+      display: flex;
+      gap: 4px;
+      padding: 20px 28px 0;
+    }
+
+    .pbar {
+      height: 3px;
+      flex: 1;
+      background: var(--bdr);
+      border-radius: 2px;
+      transition: background 0.3s;
+    }
+
+    .pbar.active { background: var(--acc2); }
+    .pbar.done   { background: var(--dp); }
+
+    .card-step { display: none; padding: 24px 28px 8px; }
+    .card-step.active { display: block; }
+
+    .step-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--acc2);
+      margin-bottom: 6px;
+    }
+
+    .step-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 20px;
+    }
+
+    /* Step 1 */
+    .life-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .life-opt {
+      border: 1.5px solid var(--bdr);
+      border-radius: 10px;
+      padding: 16px 14px;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      user-select: none;
+    }
+
+    .life-opt:hover { border-color: var(--acc2); background: rgba(124,58,237,0.03); }
+    .life-opt.selected { border-color: var(--dp); background: rgba(37,11,82,0.05); }
+
+    .life-icon { width: 32px; height: 32px; color: var(--dp); }
+
+    .life-label { font-size: 0.86rem; font-weight: 600; color: var(--text); line-height: 1.3; }
+
+    /* Step 2 */
+    .ai-textarea {
+      width: 100%;
+      border: 1.5px solid var(--bdr);
+      border-radius: 10px;
+      padding: 14px 16px;
+      font-family: var(--font);
+      font-size: 0.875rem;
+      color: var(--text);
+      resize: none;
+      height: 96px;
+      line-height: 1.65;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+
+    .ai-textarea:focus { outline: none; border-color: var(--dp); }
+    .ai-textarea::placeholder { color: #94a3b8; }
+
+    .chip-row { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 4px; }
+
+    .chip {
+      border: 1px solid var(--bdr);
+      border-radius: 100px;
+      padding: 5px 13px;
+      font-size: 0.77rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      user-select: none;
+    }
+
+    .chip:hover { border-color: var(--dp); color: var(--dp); }
+    .chip.on { background: var(--dp); border-color: var(--dp); color: #ffffff; }
+
+    /* Step 3 */
+    .budget-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .inp-group label {
+      display: block;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .inp-group input {
+      width: 100%;
+      border: 1.5px solid var(--bdr);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-family: var(--font);
+      font-size: 0.9rem;
+      color: var(--text);
+      transition: border-color 0.2s;
+    }
+
+    .inp-group input:focus { outline: none; border-color: var(--dp); }
+
+    .suburb-section-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    /* Card footer */
+    .card-foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 28px 22px;
+      border-top: 1px solid var(--bdr);
+      margin-top: 16px;
+    }
+
+    .btn-back {
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: color 0.2s;
+      font-family: var(--font);
+    }
+
+    .btn-back:hover { color: var(--text); }
+
+    .btn-next {
+      background: var(--dp);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 24px;
+      font-family: var(--font);
+      font-size: 0.875rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-next:hover { opacity: 0.85; }
+
+    /* ── TRUST BAR ── */
+    .trust-bar {
+      background: #1a0740;
+      padding: 36px 28px;
+    }
+
+    .trust-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      text-align: center;
+    }
+
+    .trust-val {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--acc);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      margin-bottom: 5px;
+    }
+
+    .trust-lbl {
+      font-size: 0.77rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 500;
+    }
+
+    /* ── FEATURES ── */
+    #features {
+      padding: 96px 28px;
+      background: var(--white);
+    }
+
+    .feat-inner { max-width: var(--max-w); margin: 0 auto; }
+
+    .eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--acc2);
+      margin-bottom: 10px;
+    }
+
+    .sec-heading {
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 700;
+      color: var(--dp);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .sec-sub {
+      font-size: 0.975rem;
+      color: var(--muted);
+      max-width: 440px;
+      line-height: 1.75;
+      margin-bottom: 52px;
+    }
+
+    .feat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feat-card {
+      border: 1px solid var(--bdr);
+      border-radius: 12px;
+      padding: 36px 30px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .feat-card:hover {
+      border-color: var(--dp);
+      box-shadow: 0 4px 24px rgba(37,11,82,0.08);
+    }
+
+    .feat-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--acc2);
+      margin-bottom: 16px;
+    }
+
+    .feat-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .feat-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── SUBURB SPOTLIGHT ── */
+    #suburbs {
+      padding: 96px 0;
+      background: var(--bg);
+    }
+
+    .suburb-hdr {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 28px 36px;
+    }
+
+    .suburb-scroll {
+      display: flex;
+      gap: 16px;
+      padding: 4px 28px 24px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .suburb-scroll::-webkit-scrollbar { display: none; }
+
+    .suburb-card {
+      flex: 0 0 215px;
+      scroll-snap-align: start;
+      background: var(--white);
+      border: 1px solid var(--bdr);
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .suburb-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 28px rgba(37,11,82,0.12);
+    }
+
+    .suburb-img {
+      width: 100%;
+      height: 128px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .suburb-body { padding: 15px; }
+    .suburb-name { font-size: 0.9rem; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .suburb-area { font-size: 0.73rem; color: var(--muted); margin-bottom: 9px; }
+    .suburb-stat { font-size: 0.77rem; font-weight: 600; color: var(--dp); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dp);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .foot-logo { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; }
+    .foot-logo .logo-dom { color: #ffffff; }
+    .foot-logo .logo-io  { color: var(--acc); }
+    .foot-copy { font-size: 0.78rem; color: rgba(255,255,255,0.38); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .trust-inner { grid-template-columns: repeat(2, 1fr); }
+      .feat-grid   { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero { padding: 120px 20px 64px; min-height: auto; }
+      .trust-bar { padding: 28px 20px; }
+      #features { padding: 64px 20px; }
+      #suburbs { padding: 64px 0; }
+      footer { padding: 24px 20px; justify-content: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="mainNav">
+    <div class="nav-inner">
+      <a href="domio-home.html" class="logo">
+        <span class="logo-dom">dom</span><span class="logo-io">io</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#features">How it works</a></li>
+        <li><a href="#suburbs">Suburbs</a></li>
+        <li><a href="domio-results.html" class="nav-cta">Browse listings</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-pill">
+        <span class="pill-dot"></span>
+        AI-powered property search &mdash; Cape Town
+      </div>
+      <h1>Find your place<br />with <em>AI that gets</em><br />what you need.</h1>
+      <p class="hero-sub">
+        Domio matches you to the right home using context, not just filters.
+        Tell us what matters&thinsp;&mdash;&thinsp;we'll find what fits.
+      </p>
+
+      <!-- ONBOARDING CARD -->
+      <div class="card-wrap">
+        <div class="onboard-card">
+          <div class="card-progress">
+            <div class="pbar" id="pb1"></div>
+            <div class="pbar" id="pb2"></div>
+            <div class="pbar" id="pb3"></div>
+          </div>
+
+          <!-- Step 1: Life stage -->
+          <div class="card-step" id="step1">
+            <p class="step-label">Step 1 of 3</p>
+            <p class="step-title">What brings you to the market?</p>
+            <div class="life-grid">
+              <div class="life-opt" onclick="selectLife(this)">
+                <svg class="life-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 16 L16 4 L28 16 V29 H20 V22 H12 V29 H4 Z"/>
+                </svg>
+                <span class="life-label">First time buyer</span>
+              </div>
+              <div class="life-opt" onclick="selectLife(this)">
+                <svg class="life-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7 25 L25 7 M25 7 H15 M25 7 V17"/>
+                  <circle cx="9" cy="23" r="3"/>
+                </svg>
+                <span class="life-label">Upsizing my home</span>
+              </div>
+              <div class="life-opt" onclick="selectLife(this)">
+                <svg class="life-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="26" height="26" rx="4"/>
+                  <polyline points="8,24 13,16 18,20 24,10"/>
+                </svg>
+                <span class="life-label">Investment property</span>
+              </div>
+              <div class="life-opt" onclick="selectLife(this)">
+                <svg class="life-icon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M16 3 C10 3 6 8.5 6 13.5 C6 21 16 29 16 29 C16 29 26 21 26 13.5 C26 8.5 22 3 16 3Z"/>
+                  <circle cx="16" cy="13" r="3.5"/>
+                </svg>
+                <span class="life-label">Relocating to Cape Town</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: AI search -->
+          <div class="card-step" id="step2">
+            <p class="step-label">Step 2 of 3</p>
+            <p class="step-title">Describe your ideal home.</p>
+            <textarea class="ai-textarea" placeholder="e.g. A quiet 2-bed apartment with parking, close to good coffee and within 15 min of the city…"></textarea>
+            <p class="step-label" style="margin-bottom:10px;">Or pick what matters</p>
+            <div class="chip-row">
+              <span class="chip" onclick="toggleChip(this)">Quiet street</span>
+              <span class="chip" onclick="toggleChip(this)">Near schools</span>
+              <span class="chip" onclick="toggleChip(this)">Sea view</span>
+              <span class="chip" onclick="toggleChip(this)">Pet friendly</span>
+              <span class="chip" onclick="toggleChip(this)">Garden</span>
+              <span class="chip" onclick="toggleChip(this)">Walkable</span>
+            </div>
+          </div>
+
+          <!-- Step 3: Budget + suburbs -->
+          <div class="card-step" id="step3">
+            <p class="step-label">Step 3 of 3</p>
+            <p class="step-title">Budget &amp; preferred areas.</p>
+            <div class="budget-grid">
+              <div class="inp-group">
+                <label>Min budget</label>
+                <input type="text" placeholder="R 1,500,000" />
+              </div>
+              <div class="inp-group">
+                <label>Max budget</label>
+                <input type="text" placeholder="R 5,000,000" />
+              </div>
+            </div>
+            <p class="suburb-section-label">Preferred suburbs</p>
+            <div class="chip-row">
+              <span class="chip on" onclick="toggleChip(this)">Sea Point</span>
+              <span class="chip" onclick="toggleChip(this)">Green Point</span>
+              <span class="chip" onclick="toggleChip(this)">De Waterkant</span>
+              <span class="chip" onclick="toggleChip(this)">Woodstock</span>
+              <span class="chip" onclick="toggleChip(this)">Observatory</span>
+              <span class="chip" onclick="toggleChip(this)">Constantia</span>
+            </div>
+          </div>
+
+          <div class="card-foot">
+            <button class="btn-back" id="btnBack" onclick="prevStep()">&#8592; Back</button>
+            <button class="btn-next" id="btnNext" onclick="nextStep()">
+              Continue
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M7 2l4.5 4.5L7 11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TRUST BAR -->
+  <div class="trust-bar">
+    <div class="trust-inner">
+      <div>
+        <div class="trust-val">48,000+</div>
+        <div class="trust-lbl">Active listings</div>
+      </div>
+      <div>
+        <div class="trust-val">R2.1bn</div>
+        <div class="trust-lbl">Sold through Domio</div>
+      </div>
+      <div>
+        <div class="trust-val">94%</div>
+        <div class="trust-lbl">Match satisfaction</div>
+      </div>
+      <div>
+        <div class="trust-val">Cape Town</div>
+        <div class="trust-lbl">Cape Town focused</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="feat-inner">
+      <p class="eyebrow">How it works</p>
+      <h2 class="sec-heading">Search that understands context.</h2>
+      <p class="sec-sub">Most portals match on bedrooms and price. Domio matches on what actually matters to you.</p>
+      <div class="feat-grid">
+        <div class="feat-card">
+          <div class="feat-num">01</div>
+          <h3 class="feat-title">AI-powered matching</h3>
+          <p class="feat-desc">Describe your lifestyle in plain language. Our AI reads between the lines to surface listings that fit your real context&thinsp;&mdash;&thinsp;not just your checkbox criteria.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-num">02</div>
+          <h3 class="feat-title">Suburb intelligence</h3>
+          <p class="feat-desc">Every result comes with live suburb data: median prices, price trajectory, walk score, and what kind of buyer this area attracts. Make confident decisions.</p>
+        </div>
+        <div class="feat-card">
+          <div class="feat-num">03</div>
+          <h3 class="feat-title">Transparent scoring</h3>
+          <p class="feat-desc">Every listing shows a match score with a plain-English breakdown. See exactly why Domio thinks a property fits&thinsp;&mdash;&thinsp;and adjust if it doesn't.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBURB SPOTLIGHT -->
+  <section id="suburbs">
+    <div class="suburb-hdr">
+      <p class="eyebrow">Suburb spotlight</p>
+      <h2 class="sec-heading">Where Cape Town buys.</h2>
+    </div>
+    <div class="suburb-scroll">
+      <div class="suburb-card" onclick="location.href='domio-results.html'">
+        <img src="https://images.unsplash.com/photo-1580674684081-7617fbf3d745?w=440&q=75" alt="Sea Point" class="suburb-img" loading="lazy" />
+        <div class="suburb-body">
+          <div class="suburb-name">Sea Point</div>
+          <div class="suburb-area">Atlantic Seaboard</div>
+          <div class="suburb-stat">Avg R4.2M &middot; 238 listings</div>
+        </div>
+      </div>
+      <div class="suburb-card" onclick="location.href='domio-results.html'">
+        <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=440&q=75" alt="Green Point" class="suburb-img" loading="lazy" />
+        <div class="suburb-body">
+          <div class="suburb-name">Green Point</div>
+          <div class="suburb-area">City Bowl</div>
+          <div class="suburb-stat">Avg R3.8M &middot; 184 listings</div>
+        </div>
+      </div>
+      <div class="suburb-card" onclick="location.href='domio-results.html'">
+        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=440&q=75" alt="De Waterkant" class="suburb-img" loading="lazy" />
+        <div class="suburb-body">
+          <div class="suburb-name">De Waterkant</div>
+          <div class="suburb-area">City Bowl</div>
+          <div class="suburb-stat">Avg R3.1M &middot; 97 listings</div>
+        </div>
+      </div>
+      <div class="suburb-card" onclick="location.href='domio-results.html'">
+        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=440&q=75" alt="Woodstock" class="suburb-img" loading="lazy" />
+        <div class="suburb-body">
+          <div class="suburb-name">Woodstock</div>
+          <div class="suburb-area">City Bowl</div>
+          <div class="suburb-stat">Avg R2.2M &middot; 142 listings</div>
+        </div>
+      </div>
+      <div class="suburb-card" onclick="location.href='domio-results.html'">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=440&q=75" alt="Observatory" class="suburb-img" loading="lazy" />
+        <div class="suburb-body">
+          <div class="suburb-name">Observatory</div>
+          <div class="suburb-area">Southern Suburbs</div>
+          <div class="suburb-stat">Avg R2.6M &middot; 89 listings</div>
+        </div>
+      </div>
+      <div class="suburb-card" onclick="location.href='domio-results.html'">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=440&q=75" alt="Constantia" class="suburb-img" loading="lazy" />
+        <div class="suburb-body">
+          <div class="suburb-name">Constantia</div>
+          <div class="suburb-area">Southern Suburbs</div>
+          <div class="suburb-stat">Avg R8.5M &middot; 61 listings</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="domio-home.html" class="foot-logo">
+      <span class="logo-dom">dom</span><span class="logo-io">io</span>
+    </a>
+    <span class="foot-copy">A BlurpleLab prototype &middot; Cape Town &middot; 2026</span>
+  </footer>
+
+  <script>
+    let step = 1;
+
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('nav--solid', window.scrollY > 60);
+    });
+
+    function render() {
+      for (let i = 1; i <= 3; i++) {
+        document.getElementById('step' + i).classList.toggle('active', i === step);
+        const pb = document.getElementById('pb' + i);
+        pb.className = 'pbar';
+        if (i < step)  pb.classList.add('done');
+        if (i === step) pb.classList.add('active');
+      }
+
+      const back = document.getElementById('btnBack');
+      const next = document.getElementById('btnNext');
+      back.style.visibility = step > 1 ? 'visible' : 'hidden';
+
+      if (step === 3) {
+        next.innerHTML = 'Find my matches <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M7 2l4.5 4.5L7 11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        next.onclick = () => location.href = 'domio-results.html';
+      } else {
+        next.innerHTML = 'Continue <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 6.5h9M7 2l4.5 4.5L7 11" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        next.onclick = nextStep;
+      }
+    }
+
+    function nextStep() { if (step < 3) { step++; render(); } }
+    function prevStep() { if (step > 1) { step--; render(); } }
+
+    function selectLife(el) {
+      document.querySelectorAll('.life-opt').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+    }
+
+    function toggleChip(el) { el.classList.toggle('on'); }
+
+    render();
+  </script>
+</body>
+</html>

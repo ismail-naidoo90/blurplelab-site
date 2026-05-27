@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domio — 47 AI-matched properties</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dp:   #250b52;
+      --acc:  #a78bfa;
+      --acc2: #7c3aed;
+      --bg:   #f8f9fb;
+      --white:#ffffff;
+      --text: #0d1b2e;
+      --muted:#64748b;
+      --bdr:  #e2e8f0;
+      --green:#059669;
+      --amber:#d97706;
+      --font: 'Inter', system-ui, sans-serif;
+      --max-w:1160px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--dp);
+      box-shadow: 0 1px 16px rgba(0,0,0,0.25);
+    }
+
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 28px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo { font-size: 1.2rem; font-weight: 800; letter-spacing: -0.02em; }
+    .logo-dom { color: #ffffff; }
+    .logo-io  { color: var(--acc); }
+
+    .nav-links { display: flex; align-items: center; gap: 24px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.65); font-size: 0.86rem; font-weight: 500; transition: color 0.2s; }
+    .nav-links a:hover { color: #ffffff; }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: #ffffff; }
+
+    /* ── SEARCH BAR ── */
+    .search-bar {
+      background: var(--white);
+      border-bottom: 1px solid var(--bdr);
+      padding: 14px 28px;
+    }
+
+    .search-bar-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .ai-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(124,58,237,0.08);
+      border: 1px solid rgba(124,58,237,0.2);
+      border-radius: 100px;
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--acc2);
+      white-space: nowrap;
+    }
+
+    .ai-tag-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--acc2);
+    }
+
+    .search-query {
+      flex: 1;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text);
+      min-width: 200px;
+    }
+
+    .result-count {
+      font-size: 0.82rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    .result-count strong { color: var(--text); }
+
+    .sort-select {
+      border: 1px solid var(--bdr);
+      border-radius: 7px;
+      padding: 6px 12px;
+      font-family: var(--font);
+      font-size: 0.82rem;
+      color: var(--text);
+      background: var(--white);
+      cursor: pointer;
+    }
+
+    /* ── LAYOUT ── */
+    .page-body {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 28px 28px 64px;
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 28px;
+      align-items: start;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: sticky;
+      top: 72px;
+    }
+
+    .filter-card {
+      background: var(--white);
+      border: 1px solid var(--bdr);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .filter-card-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.01em;
+      margin-bottom: 16px;
+    }
+
+    .filter-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .range-slider {
+      width: 100%;
+      accent-color: var(--dp);
+      margin-bottom: 6px;
+    }
+
+    .range-vals {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 18px;
+    }
+
+    .fchip {
+      border: 1px solid var(--bdr);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 0.74rem;
+      font-weight: 500;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      user-select: none;
+    }
+
+    .fchip:hover { border-color: var(--dp); color: var(--dp); }
+    .fchip.on { background: var(--dp); border-color: var(--dp); color: #ffffff; }
+
+    /* Suburb intel card */
+    .intel-card {
+      background: linear-gradient(140deg, #250b52, #3b0f8a);
+      border-radius: 12px;
+      padding: 20px;
+      color: #ffffff;
+    }
+
+    .intel-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--acc);
+      margin-bottom: 6px;
+    }
+
+    .intel-suburb {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .intel-rows { display: flex; flex-direction: column; gap: 10px; }
+
+    .intel-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+    }
+
+    .intel-row-lbl { color: rgba(255,255,255,0.6); }
+    .intel-row-val { font-weight: 600; color: #ffffff; }
+    .intel-row-val.up { color: #34d399; }
+
+    /* ── MAIN ── */
+    .main-col { min-width: 0; }
+
+    .ai-banner {
+      background: linear-gradient(120deg, rgba(37,11,82,0.06), rgba(124,58,237,0.06));
+      border: 1px solid rgba(124,58,237,0.18);
+      border-radius: 10px;
+      padding: 14px 18px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .ai-banner-icon {
+      width: 32px; height: 32px;
+      background: var(--acc2);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .ai-banner-text { font-size: 0.86rem; color: var(--muted); line-height: 1.6; }
+    .ai-banner-text strong { color: var(--text); font-weight: 600; }
+
+    /* ── LISTING GRID ── */
+    .listing-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .listing-card {
+      background: var(--white);
+      border: 1px solid var(--bdr);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.18s, box-shadow 0.18s;
+      cursor: pointer;
+    }
+
+    .listing-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 28px rgba(37,11,82,0.12);
+    }
+
+    .card-img-wrap { position: relative; }
+
+    .card-img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .match-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      background: rgba(13,27,46,0.82);
+      backdrop-filter: blur(6px);
+      border-radius: 100px;
+      padding: 4px 10px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .match-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+    }
+
+    .match-dot.high  { background: #34d399; }
+    .match-dot.med   { background: #fbbf24; }
+    .match-dot.low   { background: #f87171; }
+
+    .card-body { padding: 16px; }
+
+    .card-suburb {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--acc2);
+      margin-bottom: 4px;
+    }
+
+    .card-price {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .card-specs {
+      display: flex;
+      gap: 14px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .card-spec { display: flex; align-items: center; gap: 4px; }
+
+    .card-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 14px; }
+
+    .ai-tag-sm {
+      background: rgba(124,58,237,0.07);
+      border-radius: 4px;
+      padding: 3px 8px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--acc2);
+    }
+
+    .btn-view {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: var(--dp);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      font-family: var(--font);
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s;
+      text-decoration: none;
+    }
+
+    .btn-view:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dp);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 24px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .foot-logo { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; }
+    .foot-logo .logo-dom { color: #ffffff; }
+    .foot-logo .logo-io  { color: var(--acc); }
+    .foot-copy { font-size: 0.77rem; color: rgba(255,255,255,0.38); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .page-body { grid-template-columns: 1fr; }
+      .sidebar { position: static; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .listing-grid { grid-template-columns: 1fr; }
+      .page-body { padding: 20px 16px 48px; gap: 16px; }
+      .search-bar { padding: 12px 16px; }
+      footer { padding: 20px 16px; justify-content: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <a href="domio-home.html" class="logo">
+        <span class="logo-dom">dom</span><span class="logo-io">io</span>
+      </a>
+      <ul class="nav-links">
+        <li>
+          <a href="domio-home.html" class="nav-back">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M12 7H2M6 3L2 7l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            New search
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- SEARCH BAR -->
+  <div class="search-bar">
+    <div class="search-bar-inner">
+      <div class="ai-tag">
+        <span class="ai-tag-dot"></span>
+        AI Search
+      </div>
+      <div class="search-query">Quiet 2-bed apartment, walking distance to cafés, Sea Point or Green Point</div>
+      <div class="result-count"><strong>47</strong> AI-matched properties</div>
+      <select class="sort-select">
+        <option>Best match</option>
+        <option>Price: Low to high</option>
+        <option>Price: High to low</option>
+        <option>Newest</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- PAGE BODY -->
+  <div class="page-body">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="filter-card">
+        <div class="filter-card-title">Filters</div>
+
+        <span class="filter-label">AI Match score</span>
+        <input type="range" min="50" max="100" value="70" class="range-slider" />
+        <div class="range-vals"><span>70%+</span><span>100%</span></div>
+
+        <span class="filter-label">Price range</span>
+        <input type="range" min="500" max="10000" value="5000" class="range-slider" />
+        <div class="range-vals"><span>R500k</span><span>R5M+</span></div>
+
+        <span class="filter-label">Bedrooms</span>
+        <div class="filter-chips">
+          <span class="fchip">Any</span>
+          <span class="fchip on">1</span>
+          <span class="fchip on">2</span>
+          <span class="fchip on">3</span>
+          <span class="fchip">4+</span>
+        </div>
+
+        <span class="filter-label">Property type</span>
+        <div class="filter-chips">
+          <span class="fchip on">Apartment</span>
+          <span class="fchip">House</span>
+          <span class="fchip">Townhouse</span>
+        </div>
+      </div>
+
+      <!-- Suburb intel -->
+      <div class="intel-card">
+        <div class="intel-label">Suburb intel</div>
+        <div class="intel-suburb">Sea Point</div>
+        <div class="intel-rows">
+          <div class="intel-row">
+            <span class="intel-row-lbl">Median price</span>
+            <span class="intel-row-val">R4.2M</span>
+          </div>
+          <div class="intel-row">
+            <span class="intel-row-lbl">Price trend</span>
+            <span class="intel-row-val up">+8.2% YoY</span>
+          </div>
+          <div class="intel-row">
+            <span class="intel-row-lbl">Walk score</span>
+            <span class="intel-row-val">92 / 100</span>
+          </div>
+          <div class="intel-row">
+            <span class="intel-row-lbl">Avg days listed</span>
+            <span class="intel-row-val">45 days</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main-col">
+      <div class="ai-banner">
+        <div class="ai-banner-icon">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2l1.5 3.5L13 7l-3.5 1.5L8 12l-1.5-3.5L3 7l3.5-1.5L8 2Z" fill="#ffffff"/></svg>
+        </div>
+        <p class="ai-banner-text">
+          <strong>47 properties matched</strong> based on your search for a quiet apartment near cafés in Sea Point or Green Point.
+          Domio prioritised walkability, natural light, and proximity to the promenade.
+        </p>
+      </div>
+
+      <div class="listing-grid">
+
+        <!-- Card 1 -->
+        <div class="listing-card" onclick="location.href='domio-detail.html'">
+          <div class="card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80" alt="Sea Point apartment" class="card-img" loading="lazy" />
+            <div class="match-badge">
+              <span class="match-dot high"></span>
+              94% match
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-suburb">Sea Point</div>
+            <div class="card-price">R4,850,000</div>
+            <div class="card-specs">
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                3 bed
+              </span>
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 8h9M2 8V5a1 1 0 011-1h1.5M11 8V6a1 1 0 00-1-1H9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="3.5" cy="10.5" r="1" fill="currentColor"/><circle cx="9.5" cy="10.5" r="1" fill="currentColor"/></svg>
+                2 bath
+              </span>
+              <span class="card-spec">148 m²</span>
+            </div>
+            <div class="card-tags">
+              <span class="ai-tag-sm">Quiet street</span>
+              <span class="ai-tag-sm">Walk to beach</span>
+              <span class="ai-tag-sm">Great light</span>
+            </div>
+            <a href="domio-detail.html" class="btn-view">View property</a>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="listing-card" onclick="location.href='domio-detail.html'">
+          <div class="card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80" alt="Green Point apartment" class="card-img" loading="lazy" />
+            <div class="match-badge">
+              <span class="match-dot high"></span>
+              89% match
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-suburb">Green Point</div>
+            <div class="card-price">R3,200,000</div>
+            <div class="card-specs">
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                2 bed
+              </span>
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 8h9M2 8V5a1 1 0 011-1h1.5M11 8V6a1 1 0 00-1-1H9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="3.5" cy="10.5" r="1" fill="currentColor"/><circle cx="9.5" cy="10.5" r="1" fill="currentColor"/></svg>
+                1 bath
+              </span>
+              <span class="card-spec">94 m²</span>
+            </div>
+            <div class="card-tags">
+              <span class="ai-tag-sm">Walkable</span>
+              <span class="ai-tag-sm">Sea views</span>
+              <span class="ai-tag-sm">Parking</span>
+            </div>
+            <a href="domio-detail.html" class="btn-view">View property</a>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="listing-card" onclick="location.href='domio-detail.html'">
+          <div class="card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80" alt="De Waterkant studio" class="card-img" loading="lazy" />
+            <div class="match-badge">
+              <span class="match-dot med"></span>
+              82% match
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-suburb">De Waterkant</div>
+            <div class="card-price">R2,450,000</div>
+            <div class="card-specs">
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                1 bed
+              </span>
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 8h9M2 8V5a1 1 0 011-1h1.5M11 8V6a1 1 0 00-1-1H9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="3.5" cy="10.5" r="1" fill="currentColor"/><circle cx="9.5" cy="10.5" r="1" fill="currentColor"/></svg>
+                1 bath
+              </span>
+              <span class="card-spec">62 m²</span>
+            </div>
+            <div class="card-tags">
+              <span class="ai-tag-sm">Urban location</span>
+              <span class="ai-tag-sm">Near cafés</span>
+              <span class="ai-tag-sm">Compact layout</span>
+            </div>
+            <a href="domio-detail.html" class="btn-view">View property</a>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="listing-card" onclick="location.href='domio-detail.html'">
+          <div class="card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80" alt="Sea Point house" class="card-img" loading="lazy" />
+            <div class="match-badge">
+              <span class="match-dot high"></span>
+              91% match
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-suburb">Sea Point</div>
+            <div class="card-price">R7,100,000</div>
+            <div class="card-specs">
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                4 bed
+              </span>
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 8h9M2 8V5a1 1 0 011-1h1.5M11 8V6a1 1 0 00-1-1H9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="3.5" cy="10.5" r="1" fill="currentColor"/><circle cx="9.5" cy="10.5" r="1" fill="currentColor"/></svg>
+                3 bath
+              </span>
+              <span class="card-spec">280 m²</span>
+            </div>
+            <div class="card-tags">
+              <span class="ai-tag-sm">Family size</span>
+              <span class="ai-tag-sm">Sea Point favourite</span>
+              <span class="ai-tag-sm">Sea view</span>
+            </div>
+            <a href="domio-detail.html" class="btn-view">View property</a>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="listing-card" onclick="location.href='domio-detail.html'">
+          <div class="card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80" alt="Woodstock apartment" class="card-img" loading="lazy" />
+            <div class="match-badge">
+              <span class="match-dot med"></span>
+              78% match
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-suburb">Woodstock</div>
+            <div class="card-price">R1,950,000</div>
+            <div class="card-specs">
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                2 bed
+              </span>
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 8h9M2 8V5a1 1 0 011-1h1.5M11 8V6a1 1 0 00-1-1H9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="3.5" cy="10.5" r="1" fill="currentColor"/><circle cx="9.5" cy="10.5" r="1" fill="currentColor"/></svg>
+                1 bath
+              </span>
+              <span class="card-spec">85 m²</span>
+            </div>
+            <div class="card-tags">
+              <span class="ai-tag-sm">Creative area</span>
+              <span class="ai-tag-sm">Good value</span>
+              <span class="ai-tag-sm">Trending suburb</span>
+            </div>
+            <a href="domio-detail.html" class="btn-view">View property</a>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="listing-card" onclick="location.href='domio-detail.html'">
+          <div class="card-img-wrap">
+            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=600&q=80" alt="Observatory house" class="card-img" loading="lazy" />
+            <div class="match-badge">
+              <span class="match-dot med"></span>
+              75% match
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card-suburb">Observatory</div>
+            <div class="card-price">R3,500,000</div>
+            <div class="card-specs">
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><rect x="1" y="5" width="11" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M4 5V3.5a2.5 2.5 0 015 0V5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+                3 bed
+              </span>
+              <span class="card-spec">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 8h9M2 8V5a1 1 0 011-1h1.5M11 8V6a1 1 0 00-1-1H9" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/><circle cx="3.5" cy="10.5" r="1" fill="currentColor"/><circle cx="9.5" cy="10.5" r="1" fill="currentColor"/></svg>
+                2 bath
+              </span>
+              <span class="card-spec">162 m²</span>
+            </div>
+            <div class="card-tags">
+              <span class="ai-tag-sm">Peaceful garden</span>
+              <span class="ai-tag-sm">Near UCT</span>
+              <span class="ai-tag-sm">Heritage building</span>
+            </div>
+            <a href="domio-detail.html" class="btn-view">View property</a>
+          </div>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="domio-home.html" class="foot-logo">
+      <span class="logo-dom">dom</span><span class="logo-io">io</span>
+    </a>
+    <span class="foot-copy">A BlurpleLab prototype &middot; Cape Town &middot; 2026</span>
+  </footer>
+
+  <script>
+    document.querySelectorAll('.fchip').forEach(c => {
+      c.addEventListener('click', () => c.classList.toggle('on'));
+    });
+  </script>
+</body>
+</html>

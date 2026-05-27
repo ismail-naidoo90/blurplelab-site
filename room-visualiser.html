@@ -6,54 +6,46 @@
   <title>Room Visualiser Test — BlurpleLab</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --blue:          #4F46E5;
-      --purple:        #7C3AED;
-      --blurple:       #6366F1;
-      --blurple-light: #818CF8;
-      --blurple-pale:  #C7D2FE;
-      --gradient:      linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
-      --gradient-soft: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%);
-      --ink:           #09090F;
-      --text-mid:      #3D3B56;
-      --text-muted:    #8884A3;
-      --white:         #FFFFFF;
-      --border:        #E8E5F5;
-      --surface:       #F5F5F8;
-      --font:          'Inter', system-ui, sans-serif;
-
-      --col-original:  #0f0c36;
-      --col-chatgpt:   #10a37f;
-      --col-gemini:    #4285f4;
+      --blurple:     #250b52;
+      --nav:         #0d1b2e;
+      --white:       #ffffff;
+      --bg-light:    #f7f8fc;
+      --card-border: #e2e8f0;
+      --text:        #0d1b2e;
+      --muted:       #64748b;
+      --accent:      #7c3aed;
+      --col-original: #64748b;
+      --col-chatgpt:  #10a37f;
+      --col-gemini:   #4285f4;
+      --font:        'Inter', system-ui, sans-serif;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: var(--font);
-      background: var(--surface);
-      color: var(--ink);
+      background: var(--white);
+      color: var(--text);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
     }
 
     /* ── NAV ── */
     nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
+      position: sticky;
+      top: 0;
       z-index: 100;
-      background: rgba(9, 9, 15, 0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: var(--nav);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
     .nav-inner {
-      max-width: 1120px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 0 28px;
       height: 60px;
@@ -62,98 +54,59 @@
       justify-content: space-between;
     }
 
-    .logo {
-      font-size: 1.15rem;
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-decoration: none;
+    .nav-logo {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
     }
 
     .back-link {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      color: rgba(255,255,255,0.5);
+      color: rgba(255,255,255,0.65);
       font-size: 0.85rem;
       font-weight: 500;
-      text-decoration: none;
       transition: color 0.2s;
     }
-    .back-link:hover { color: rgba(255,255,255,0.9); }
+
+    .back-link:hover { color: #ffffff; }
 
     /* ── PAGE HEADER ── */
     .page-header {
-      background: var(--ink);
-      padding: 96px 28px 52px;
+      background: var(--blurple);
+      padding: 52px 28px 48px;
       text-align: center;
-      position: relative;
-      overflow: hidden;
     }
 
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(70px);
-      pointer-events: none;
-    }
-
-    .orb-1 {
-      width: 500px; height: 500px;
-      background: radial-gradient(circle, rgba(79,70,229,0.3) 0%, transparent 70%);
-      top: -160px; left: -80px;
-    }
-
-    .orb-2 {
-      width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(124,58,237,0.22) 0%, transparent 70%);
-      bottom: -120px; right: -60px;
-    }
-
-    .header-inner {
-      position: relative;
-      z-index: 1;
-      max-width: 680px;
-      margin: 0 auto;
-    }
-
-    .page-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(99,102,241,0.12);
-      border: 1px solid rgba(99,102,241,0.25);
-      color: var(--blurple-light);
+    .page-header-eyebrow {
       font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 50px;
-      margin-bottom: 20px;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 12px;
     }
 
-    .page-title {
-      font-size: clamp(2rem, 5vw, 3rem);
-      font-weight: 900;
-      letter-spacing: -0.04em;
-      line-height: 1.08;
-      color: var(--white);
-      margin-bottom: 14px;
+    .page-header h1 {
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 800;
+      color: #ffffff;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      margin-bottom: 10px;
     }
 
-    .page-sub {
+    .page-header p {
       font-size: 1rem;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.7;
+      color: rgba(255,255,255,0.72);
+      font-weight: 400;
     }
 
     /* ── MAIN ── */
     .main {
-      max-width: 1120px;
+      max-width: 1100px;
       margin: 0 auto;
       padding: 48px 28px 80px;
     }
@@ -184,10 +137,10 @@
       font-size: 0.875rem;
       font-weight: 600;
       cursor: pointer;
-      border: 1.5px solid var(--border);
+      border: 1px solid var(--card-border);
       background: var(--white);
-      color: var(--text-mid);
-      transition: border-color 0.15s, background 0.15s, color 0.15s, box-shadow 0.15s;
+      color: var(--muted);
+      transition: border-color 0.15s, color 0.15s, background 0.15s, box-shadow 0.15s;
       white-space: nowrap;
     }
 
@@ -197,20 +150,18 @@
     }
 
     .style-pill.active {
-      background: var(--gradient);
-      border-color: transparent;
-      color: #fff;
-      box-shadow: 0 4px 18px rgba(99,102,241,0.32);
+      background: var(--blurple);
+      border-color: var(--blurple);
+      color: #ffffff;
+      box-shadow: 0 2px 12px rgba(37,11,82,0.25);
     }
 
     .style-desc {
       font-size: 0.875rem;
-      color: var(--text-muted);
+      color: var(--muted);
       font-weight: 500;
-      letter-spacing: 0.01em;
       min-height: 1.4em;
       text-align: center;
-      transition: opacity 0.2s;
     }
 
     /* ── COMPARISON ── */
@@ -232,29 +183,29 @@
       gap: 8px;
       font-size: 0.85rem;
       font-weight: 700;
-      letter-spacing: 0.01em;
     }
 
     .comp-label.original { color: var(--col-original); }
     .comp-label.chatgpt  { color: var(--col-chatgpt); }
     .comp-label.gemini   { color: var(--col-gemini); }
 
-    .label-icon {
-      font-size: 1rem;
-      line-height: 1;
-    }
-
     .img-wrap {
-      border-radius: 12px;
+      border-radius: 8px;
       overflow: hidden;
       aspect-ratio: 4 / 3;
-      border: 2.5px solid;
+      border: 1.5px solid;
       cursor: zoom-in;
+      transition: box-shadow 0.2s, border-color 0.2s;
     }
 
-    .img-wrap.original { border-color: var(--col-original); }
+    .img-wrap.original { border-color: var(--card-border); }
     .img-wrap.chatgpt  { border-color: var(--col-chatgpt); }
     .img-wrap.gemini   { border-color: var(--col-gemini); }
+
+    .img-wrap:hover {
+      box-shadow: 0 4px 20px rgba(37,11,82,0.15);
+      border-color: var(--blurple);
+    }
 
     .img-wrap img {
       width: 100%;
@@ -264,15 +215,36 @@
       transition: opacity 0.25s ease;
     }
 
+    /* ── FOOTER ── */
+    footer {
+      background: var(--nav);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 24px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-logo {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: -0.01em;
+    }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.4);
+    }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
-      .comparison {
-        grid-template-columns: 1fr;
-        gap: 28px;
-      }
-
+      .comparison { grid-template-columns: 1fr; gap: 28px; }
       .main { padding: 36px 20px 60px; }
       .style-pill { font-size: 0.8rem; padding: 9px 15px; }
+      footer { justify-content: center; text-align: center; }
     }
 
     /* ── LIGHTBOX ── */
@@ -296,7 +268,7 @@
     .lb-backdrop {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.9);
+      background: rgba(13,27,46,0.97);
       cursor: zoom-out;
     }
 
@@ -320,13 +292,12 @@
     .lb-label-text {
       font-size: 0.95rem;
       font-weight: 700;
-      letter-spacing: 0.01em;
       line-height: 1.3;
     }
 
     .lb-style-text {
       font-size: 0.78rem;
-      color: rgba(255,255,255,0.4);
+      color: rgba(255,255,255,0.5);
       font-weight: 500;
     }
 
@@ -336,17 +307,17 @@
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.14);
-      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.15s;
+      transition: background 0.15s, color 0.15s;
     }
 
-    .lb-close:hover { background: rgba(255,255,255,0.22); }
+    .lb-close:hover { background: rgba(255,255,255,0.15); color: #ffffff; }
 
     .lb-arrow {
       position: fixed;
@@ -356,17 +327,17 @@
       width: 48px;
       height: 48px;
       border-radius: 50%;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.14);
-      color: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.7);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.15s;
+      transition: background 0.15s, color 0.15s;
     }
 
-    .lb-arrow:hover { background: rgba(255,255,255,0.22); }
+    .lb-arrow:hover { background: rgba(255,255,255,0.15); color: #ffffff; }
     .lb-arrow.prev { left: 16px; }
     .lb-arrow.next { right: 16px; }
 
@@ -376,7 +347,7 @@
       max-width: calc(100vw - 160px);
       max-height: calc(100vh - 100px);
       object-fit: contain;
-      border-radius: 8px;
+      border-radius: 6px;
       display: block;
     }
 
@@ -392,25 +363,21 @@
   <!-- NAV -->
   <nav>
     <div class="nav-inner">
-      <a href="index.html" class="logo">BlurpleLab</a>
+      <a href="index.html" class="nav-logo">BlurpleLab</a>
       <a href="index.html" class="back-link">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        Back to home
+        Back
       </a>
     </div>
   </nav>
 
   <!-- PAGE HEADER -->
   <div class="page-header">
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="header-inner">
-      <div class="page-tag">AI Experiment</div>
-      <h1 class="page-title">Room Visualiser Test</h1>
-      <p class="page-sub">Comparing AI room visualisation — ChatGPT vs Gemini</p>
-    </div>
+    <p class="page-header-eyebrow">AI · PropTech</p>
+    <h1>Room Visualiser Test</h1>
+    <p>Comparing AI room visualisation — ChatGPT vs Gemini</p>
   </div>
 
   <!-- MAIN -->
@@ -431,30 +398,27 @@
     <!-- COMPARISON -->
     <div class="comparison">
 
-      <!-- Original — never changes -->
       <div class="comp-col">
         <div class="comp-label original">
-          <span class="label-icon">📷</span> Original
+          <span>📷</span> Original
         </div>
         <div class="img-wrap original">
           <img src="Visualiser%20Images/Orginal_image.png" alt="Original room photo" />
         </div>
       </div>
 
-      <!-- ChatGPT -->
       <div class="comp-col">
         <div class="comp-label chatgpt">
-          <span class="label-icon">✦</span> ChatGPT
+          <span>✦</span> ChatGPT
         </div>
         <div class="img-wrap chatgpt">
           <img id="imgChatgpt" src="Visualiser%20Images/Modern%20African%20Minimalist_GPT.png" alt="ChatGPT render" />
         </div>
       </div>
 
-      <!-- Gemini -->
       <div class="comp-col">
         <div class="comp-label gemini">
-          <span class="label-icon">✦</span> Gemini
+          <span>✦</span> Gemini
         </div>
         <div class="img-wrap gemini">
           <img id="imgGemini" src="Visualiser%20Images/Modern%20African%20Minimalist_Gemini.png" alt="Gemini render" />
@@ -463,6 +427,12 @@
 
     </div>
   </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="index.html" class="footer-logo">BlurpleLab</a>
+    <span class="footer-copy">Cape Town &middot; 2025</span>
+  </footer>
 
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
@@ -534,7 +504,7 @@
         pill.classList.add('active');
 
         const s = STYLES[pill.dataset.style];
-        styleDesc.textContent  = s.desc;
+        styleDesc.textContent = s.desc;
         imgChatgpt.src = s.gpt;
         imgGemini.src  = s.gemini;
       });
@@ -542,7 +512,7 @@
 
     // ── LIGHTBOX ──
     const LB_META = [
-      { label: '📷 Original', color: '#0f0c36' },
+      { label: '📷 Original', color: '#ffffff' },
       { label: '✦ ChatGPT',  color: '#10a37f' },
       { label: '✦ Gemini',   color: '#4285f4' },
     ];

@@ -6,7 +6,7 @@
   <title>Dwelly - Cape Town City Centre Properties for Sale</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ── RESET & BASE ─────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -60,6 +60,48 @@
     a:hover { color: var(--p24-red); }
     img { display: block; max-width: 100%; }
     ul { list-style: none; }
+
+    /* ── BLURPLELAB BAR ──────────────────────────── */
+    .blurple-bar {
+      background: #0d1b2e;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      height: 36px;
+      display: flex;
+      align-items: center;
+    }
+
+    .blurple-bar-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 16px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .blurple-logo {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: #ffffff;
+      text-decoration: none;
+    }
+
+    .blurple-back {
+      font-family: 'Inter', sans-serif;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: rgba(255,255,255,0.65);
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .blurple-back:hover { color: #ffffff; }
 
     /* ── TOP NAV ──────────────────────────────────── */
     .topbar {
@@ -1807,6 +1849,19 @@
   <!-- PROTOTYPE LABEL -->
   <div class="prototype-banner">
     <strong>BlurpleLab Prototype</strong> — Static UI recreation of Dwelly listings page for research purposes.
+  </div>
+
+  <!-- BLURPLELAB BAR -->
+  <div class="blurple-bar">
+    <div class="blurple-bar-inner">
+      <a href="index.html" class="blurple-logo">BlurpleLab</a>
+      <a href="index.html" class="blurple-back">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M7.5 1.5L3 6l4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        Back to BlurpleLab
+      </a>
+    </div>
   </div>
 
   <!-- TOP BAR -->
